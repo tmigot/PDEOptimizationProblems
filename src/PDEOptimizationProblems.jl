@@ -40,7 +40,9 @@ const problems = [
   #PDE-constraint only
   "incompressiblenavierstokes",
   #Affine constraints
-  # "poissonmixte",
+  "poissonmixed",
+  "poissonmixed2",
+  "poissonparam",
   #Affine constraints + control bounds
   "controlelasticmembrane1", #constant bounds
   "controlelasticmembrane2", #bounds applied to midcells
@@ -51,6 +53,12 @@ const problems = [
   "poisson3d",
   # "poisson-with-Neumann-and-Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
+  #ODE-constraint
+  "cellincrease",
+  "controlsir",
+  "dynamicsir",
+  "sis",
+  "torebrachistochrone",
 ]
 
 path = dirname(@__FILE__)
