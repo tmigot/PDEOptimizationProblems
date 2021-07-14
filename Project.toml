@@ -1,0 +1,19 @@
+name = "PDEOptimizationProblems"
+uuid = "ef7eb7c4-1a72-4e0b-99f8-ef54fec0de6c"
+authors = ["tmigot <tangi.migot@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Gridap = "56d4f2e9-7ea1-5844-9cf6-b9c51ca7ce8e"
+PDENLPModels = "80da258d-c172-4540-9646-64f172512520"
+
+[compat]
+Gridap = "0.15.5"
+PDENLPModels = "0.2"
+julia = "^1.3.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
