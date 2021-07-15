@@ -41,5 +41,5 @@ function poissonparam(args...; n = 3, kwargs...)
 
   nUg = num_free_dofs(Ug)
   xs = rand(nUg + 1)
-  return GridapPDENLPModel(xs, nrj, Ug, V0, op)
+  return GridapPDENLPModel(xs, nrj, Ug, V0, op, name = "poissonparam")
 end

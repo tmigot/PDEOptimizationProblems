@@ -84,6 +84,6 @@ function controlelasticmembrane2(; n :: Int = 10, args...)
     op,
     lvaru = lvaru,
     uvaru = uvaru,
-    name = "controlelasticmembrane1",
+    name = "controlelasticmembrane2",
   )
 end

@@ -61,5 +61,5 @@ function dynamicsir(args...; x0 = [1, 2], n = 10, T = 1, kwargs...)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Ypde) + Gridap.FESpaces.num_free_dofs(Ycon)
   xin = zeros(ndofs)
-  return GridapPDENLPModel(xin, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op_sir)
+  return GridapPDENLPModel(xin, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op_sir, name = "dynamic-SIR")
 end

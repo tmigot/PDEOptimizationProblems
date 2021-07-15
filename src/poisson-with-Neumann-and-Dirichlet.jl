@@ -52,5 +52,5 @@ function _poissonwithNeumannandDirichlet(args...;kwargs...)
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
   op = FEOperator(res, Ypde, Xpde, topt_Ω, topt_Γ)
 
-  return GridapPDENLPModel(xin, f, trian, quad, Ypde, Ycon, Xpde, Xcon, op)
+  return GridapPDENLPModel(xin, f, trian, quad, Ypde, Ycon, Xpde, Xcon, op, name = "poisson with Neumann and Dirichlet")
 end

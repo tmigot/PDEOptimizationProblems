@@ -78,6 +78,6 @@ function poissonboltzman2d(; n :: Int = 100)
     Xpde,
     Xcon,
     op,
-    name = "poissonBoltzman2d",
+    name = "2D-Poisson Boltzman",
   )
 end

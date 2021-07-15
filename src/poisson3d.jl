@@ -51,5 +51,5 @@ function poisson3d(; n :: Int = 10)
     ∫(0.5 * f(y,u)) * dΩ
   end
   x0 = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(x0, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op, name = "poisson3d")
+  return GridapPDENLPModel(x0, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op, name = "3D-Poisson")
 end
