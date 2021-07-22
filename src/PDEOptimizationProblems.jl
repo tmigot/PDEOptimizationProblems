@@ -48,6 +48,7 @@ const problems = [
   "controlelasticmembrane2", #bounds applied to midcells
   #Nonlinear constraints
   "burger1d",
+  "burger1d_param",
   "poissonboltzman2d",
   "smallestlaplacianeigenvalue",
   "poisson3d",
