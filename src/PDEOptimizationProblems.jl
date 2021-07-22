@@ -34,7 +34,7 @@ using Gridap
 
 using PDENLPModels
 
-const problems = [
+const problems__ = [
   #Unconstrained problems
   "penalizedpoisson",
   #PDE-constraint only
@@ -60,6 +60,8 @@ const problems = [
   "dynamicsir",
   "sis",
   "torebrachistochrone",
+  # Problems with issues
+  "apinene", # discrete objective function (now Dirac)
 ]
 
 path = dirname(@__FILE__)
