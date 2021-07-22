@@ -1,6 +1,6 @@
 # Isometrization of α-pinene COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
-function apinene(args...; n = 10, kwargs...)
+function apinene(args...; n = 400, kwargs...)
   T = 36420.0
   model = CartesianDiscreteModel((0, T), n)
 
@@ -57,5 +57,5 @@ function apinene(args...; n = 10, kwargs...)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs + 5)
-  return GridapPDENLPModel(xin, f, trian, dΩ, Y, X, op_sis, name = "control-SIR")
+  return GridapPDENLPModel(xin, f, trian, dΩ, Y, X, op_sis, name = "Isometrization of α-pinene")
 end

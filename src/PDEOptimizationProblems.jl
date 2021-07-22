@@ -34,11 +34,12 @@ using Gridap
 
 using PDENLPModels
 
-const problems__ = [
+const problems = [
   #Unconstrained problems
   "penalizedpoisson",
-  #PDE-constraint only
+  #PDE/ODE-constraint only
   "incompressiblenavierstokes",
+  "channel",
   #Affine constraints
   "poissonmixed",
   "poissonmixed2",
@@ -62,14 +63,15 @@ const problems__ = [
   "torebrachistochrone",
   # Problems with issues
   "apinene", # discrete objective function (now Dirac)
+  # marine, # discrete objective function (now not implemented)
 ]
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))
 for file in files
-    if file ≠ "PDEOptimizationProblems.jl"
-        include(file)
-    end
+  if file ≠ "PDEOptimizationProblems.jl"
+    include(file)
+  end
 end
 
 end #end of module
