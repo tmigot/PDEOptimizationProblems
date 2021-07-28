@@ -52,6 +52,7 @@ const problems = [
   "burger1d_param",
   "poissonboltzman2d",
   "smallestlaplacianeigenvalue",
+  "catmix",
   # "poisson3d",
   # "poisson-with-Neumann-and-Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
