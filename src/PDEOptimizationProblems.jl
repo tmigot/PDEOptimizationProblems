@@ -66,11 +66,9 @@ const problems = [
   # marine, # discrete objective function (now not implemented)
   "robot", # minimize final time + final time constraints
   "steering", # minimize final time + final time constraints
+  "rocket", # maximize final time value of unknown function
+  "glider", # maximize final time value of unknown function
 ]
-
-#### Problems with issues
-# apinene: discrete objective function
-# problems = ["steering"]
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))
