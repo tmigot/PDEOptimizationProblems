@@ -37,6 +37,7 @@ using PDENLPModels
 const problems = [
   #Unconstrained problems
   "penalizedpoisson",
+  "torsion",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
