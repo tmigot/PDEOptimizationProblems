@@ -52,8 +52,7 @@ function poissonboltzman2d(; n :: Int = 100)
   #Objective function:
   yd(x) = min(x[1]-0.25, 0.75-x[1],x[2]-0.25, 0.75-x[2])>=0. ? 10. : 5.
   α = 1e-4
-  function f(yu)
-    y, u = yu
+  function f(y, u)
     ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
   end
 
@@ -72,7 +71,6 @@ function poissonboltzman2d(; n :: Int = 100)
     xin,
     f,
     trian,
-    dΩ,
     Ypde,
     Ycon,
     Xpde,

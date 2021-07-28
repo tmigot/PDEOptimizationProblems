@@ -54,12 +54,13 @@ function dynamicsir(args...; x0 = [1, 2], n = 10, T = 1, kwargs...)
   w1(x) = 1.0 #1. /(x+1.)
   w2(x) = 2.0 #1. /(1. + x) #/(x+1.)
   #we need to be smart to avoid divisions
-  function f(yu) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
-    I, S, bf, cf = yu
+  function f(y, u) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
+    I, S = y
+    bf, cf = u
     ∫(0.5 * ((bf ⋅ w0) - w1) ⋅ ((bf ⋅ w0) - w1) + 0.5 * ((cf ⋅ w0) - w2) ⋅ ((cf ⋅ w0) - w2))dΩ
   end
 
   ndofs = Gridap.FESpaces.num_free_dofs(Ypde) + Gridap.FESpaces.num_free_dofs(Ycon)
   xin = zeros(ndofs)
-  return GridapPDENLPModel(xin, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op_sir, name = "dynamic-SIR")
+  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "dynamic-SIR")
 end

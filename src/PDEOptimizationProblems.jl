@@ -52,7 +52,7 @@ const problems = [
   "burger1d_param",
   "poissonboltzman2d",
   "smallestlaplacianeigenvalue",
-  "poisson3d",
+  # "poisson3d",
   # "poisson-with-Neumann-and-Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
   #ODE-constraint
@@ -65,6 +65,11 @@ const problems = [
   "apinene", # discrete objective function (now Dirac)
   # marine, # discrete objective function (now not implemented)
 ]
+
+
+#### Problems with issues
+# apinene: discrete objective function
+# problems = ["channel"]
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))

@@ -64,8 +64,7 @@ function inversepoissonproblem2d(; n :: Int = 100)
   #Objective function:
   yd(x) = -x[1]^2
   α = 1e-4
-  function f(yu)
-    y, u = yu
+  function f(y, u)
     ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
   end
 
@@ -83,7 +82,6 @@ function inversepoissonproblem2d(; n :: Int = 100)
     zeros(npde + ncon),
     f,
     trian,
-    dΩ, 
     Ypde,
     Ycon,
     Xpde,

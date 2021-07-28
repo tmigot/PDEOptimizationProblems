@@ -24,8 +24,7 @@ function _poissonwithNeumannandDirichlet(args...;kwargs...)
   dΩᵦ = Measure(btrian, degree)
 
   ybis(x) =  x[1]^2+x[2]^2
-  function f(yu)
-    y, u = yu
+  function f(y, u)
     ∫(0.5 * (ybis - y) * (ybis - y) + 0.5 * u * u) * dΩ
   end
 
@@ -52,5 +51,5 @@ function _poissonwithNeumannandDirichlet(args...;kwargs...)
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
   op = FEOperator(res, Ypde, Xpde, topt_Ω, topt_Γ)
 
-  return GridapPDENLPModel(xin, f, trian, quad, Ypde, Ycon, Xpde, Xcon, op, name = "poisson with Neumann and Dirichlet")
+  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "poisson with Neumann and Dirichlet")
 end

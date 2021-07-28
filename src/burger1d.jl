@@ -59,10 +59,8 @@ function burger1d(args...;n :: Int = 512, kwargs...)
   yd(x) = -x[1]^2
   α = 1e-2
   #objective function:
-  f(y, u) = 0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u
-  function f(yu) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
-    y, u = yu
-    ∫(f(y, u))dΩ
+  function f(y, u) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
+    ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u)dΩ
   end
 
   #Definition of the constraint operator
@@ -78,7 +76,7 @@ function burger1d(args...;n :: Int = 512, kwargs...)
   nvar_pde = Gridap.FESpaces.num_free_dofs(Ypde)
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
   x0 = zeros(nvar_pde + nvar_con)
-  nlp = GridapPDENLPModel(x0, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op, name = "burger1d")
+  nlp = GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "burger1d")
 
   #=
   #The solution is just  y = yd and u=0. 

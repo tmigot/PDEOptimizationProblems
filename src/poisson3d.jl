@@ -46,10 +46,9 @@ function poisson3d(; n :: Int = 10)
   ybis(x) =  sin(k*x[1]) * x[2]
   ∇ybis(x) = VectorValue(k*cos(k*x[1])*x[2], sin(k*x[1]), 0.)
   f(y,u) = (ybis - y) * (ybis - y) + (∇(y) - ∇ybis) ⊙ (∇(y) - ∇ybis) + (u-ubis) * (u-ubis)
-  function f(yu)
-    y,u = yu
+  function f(y, u)
     ∫(0.5 * f(y,u)) * dΩ
   end
   x0 = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(x0, f, trian, dΩ, Ypde, Ycon, Xpde, Xcon, op, name = "3D-Poisson")
+  return GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "3D-Poisson")
 end

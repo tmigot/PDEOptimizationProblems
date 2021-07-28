@@ -43,8 +43,7 @@ function controlelasticmembrane1(args...; n :: Int = 10, kargs...)
   # Objective function:
   yd(x) = -x[1]^2
   α = 1e-2
-  function f(yu)
-    y, u = yu
+  function f(y, u)
     ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
   end
 
@@ -65,7 +64,6 @@ function controlelasticmembrane1(args...; n :: Int = 10, kargs...)
     zeros(npde + ncon),
     f,
     trian,
-    dΩ,
     Ypde,
     Ycon,
     Xpde,

@@ -68,5 +68,5 @@ function incompressiblenavierstokes(args...; n = 3, kwargs...)
   xin = zeros(ndofs)
   # Ycon, Xcon = nothing, nothing
   # @time nlp = GridapPDENLPModel(xin, x->0.0, Ωₕ, dΩ, Y, Ycon, X, Xcon, op)
-  return GridapPDENLPModel(xin, x -> ∫(0.0)dΩ, Ωₕ, dΩ, Y, X, op, name = "incompressible Navier-Stokes")
+  return GridapPDENLPModel(xin, x -> ∫(0.0)dΩ, Ωₕ, Y, X, op, name = "incompressible Navier-Stokes")
 end

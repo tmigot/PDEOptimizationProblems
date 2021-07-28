@@ -55,7 +55,6 @@ function smallestlaplacianeigenvalue(; n :: Int = 10, args...)
   return GridapPDENLPModel(xin,
   f,
   trian,
-  dΩ,
   Ypde,
   Xpde,
   op,

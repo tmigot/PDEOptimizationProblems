@@ -32,13 +32,12 @@ function burger1d_param(args...; n = 512, kwargs...)
   nu = 0.08
 
   # Now we move to the optimization:
-  ud(x) = -x[1]^2
+  yd(x) = -x[1]^2
   α = 1e-2
 
   # objective function:
-  function f(k, yu) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
-    u, z = yu
-    ∫(0.5 * (ud - u) * (ud - u) + 0.5 * α * z * z + 0.5 * (k[1] - 0.08) * (k[1] - 0.08))dΩ
+  function f(k, y, u) #:: Union{Gridap.MultiField.MultiFieldFEFunction, Gridap.CellData.GenericCellField}
+    ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u + 0.5 * (k[1] - 0.08) * (k[1] - 0.08))dΩ
   end
 
   function res(k, y, u, v) #u is the solution of the PDE and z the control
@@ -53,5 +52,5 @@ function burger1d_param(args...; n = 512, kwargs...)
 
   Y = MultiFieldFESpace([U, Ycon])
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y) + 1)
-  return GridapPDENLPModel(xin, f, trian, dΩ, U, Ycon, V, Xcon, op)
+  return GridapPDENLPModel(xin, f, trian, U, Ycon, V, Xcon, op)
 end
