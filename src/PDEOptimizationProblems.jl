@@ -64,12 +64,13 @@ const problems = [
   # Problems with issues
   "apinene", # discrete objective function (now Dirac)
   # marine, # discrete objective function (now not implemented)
+  "robot", # minimize final time + final time constraints
+  "steering", # minimize final time + final time constraints
 ]
-
 
 #### Problems with issues
 # apinene: discrete objective function
-# problems = ["channel"]
+# problems = ["steering"]
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))
