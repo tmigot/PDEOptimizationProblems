@@ -1,8 +1,8 @@
 # https://arxiv.org/pdf/2103.14552.pdf
-# Example 3. MOREBV
+# Example 1. MEMBRANE
 # Multilevel Active-Set Trust-Region (MASTR) Method for Bound Constrained Minimization
 # Alena Kopaničáková and Rolf Krause
-function morebv(args...; n = 3, kwargs...)
+function membrane(args...; n = 3, kwargs...)
   # n est la taille de la discrétisation (entier)
   domain = (0, 1, 0, 1)
   model = CartesianDiscreteModel(domain, (n,n))
@@ -10,9 +10,8 @@ function morebv(args...; n = 3, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  w(x) = x[1] + x[2] + 1
   function f(y)
-    return ∫( Δ(y) - 0.5 * (y + w) * (y + w) * (y + w) )dΩ
+    return ∫( (∇(y)⋅∇(y)) + y )dΩ
   end
 
   valuetype = Float64
@@ -21,7 +20,7 @@ function morebv(args...; n = 3, kwargs...)
     model,
     reffe;
     conformity = :H1,
-    dirichlet_tags = "boundary",
+    dirichlet_tags = "boundary", # should be over Γₗ only.
   )
   U0 = TrialFESpace(V0, 0.0)
   nU0 = Gridap.FESpaces.num_free_dofs(U0)
@@ -29,7 +28,13 @@ function morebv(args...; n = 3, kwargs...)
   cell_xs = get_cell_coordinates(trian)
   midpoint(xs) = sum(xs) / length(xs)
   cell_xm = lazy_map(midpoint, cell_xs)
-  lb(x) = sin(5pi * x[1]) * sin(pi * x[2]) * sin(pi * (1-x[1])) * sin(pi * (1-x[2]))
+  function lb(x)
+    if x[1] == 1
+      return (x[1] - 1)^2 + (x[2] + 0.5)^2 # C = (1; -0.5; -1.3) why is it 3D?
+    else
+      return -Inf
+    end
+  end
   cell_l = lazy_map(lb, cell_xm)
   lb = get_free_values(Gridap.FESpaces.interpolate(cell_l, V0))
 
