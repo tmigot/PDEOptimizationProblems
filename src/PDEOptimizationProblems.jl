@@ -39,6 +39,7 @@ const problems = [
   "penalizedpoisson",
   "torsion",
   "bearing",
+  "lane_emden",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
