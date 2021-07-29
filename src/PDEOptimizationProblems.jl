@@ -41,6 +41,7 @@ const problems = [
   "bearing",
   "lane_emden",
   "dirichlet",
+  "henon",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
