@@ -40,6 +40,7 @@ const problems = [
   "torsion",
   "bearing",
   "lane_emden",
+  "dirichlet",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
