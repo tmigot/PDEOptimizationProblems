@@ -43,6 +43,7 @@ const problems = [
   "dirichlet",
   "henon",
   "morebv",
+  "ignition",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
@@ -78,6 +79,7 @@ const problems = [
   "steering", # minimize final time + final time constraints
   "rocket", # maximize final time value of unknown function
   "glider", # maximize final time value of unknown function
+  "membrane", # not the correct boundary condition
 ]
 
 path = dirname(@__FILE__)
