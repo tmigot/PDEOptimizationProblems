@@ -42,6 +42,7 @@ const problems = [
   "lane_emden",
   "dirichlet",
   "henon",
+  "morebv",
   #PDE/ODE-constraint only
   "incompressiblenavierstokes",
   "channel",
@@ -73,7 +74,7 @@ const problems = [
   # marine, # discrete objective function (now not implemented)
   "gasoil", # discrete objective function, now I use interpolation
   "methanol", # discrete objective function, now I use interpolation
-  "robot", # minimize final time + final time constraints
+  # "robot", # minimize final time + final time constraints
   "steering", # minimize final time + final time constraints
   "rocket", # maximize final time value of unknown function
   "glider", # maximize final time value of unknown function
