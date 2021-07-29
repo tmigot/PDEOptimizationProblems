@@ -55,6 +55,7 @@ const problems = [
   "poissonboltzman2d",
   "smallestlaplacianeigenvalue",
   "catmix",
+  "minsurf",
   # "poisson3d",
   # "poisson-with-Neumann-and-Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
