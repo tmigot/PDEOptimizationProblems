@@ -11,8 +11,8 @@ PDENLPModels = "80da258d-c172-4540-9646-64f172512520"
 [compat]
 DataFrames = "1"
 Gridap = "0.15.5"
-PDENLPModels = "0.2"
 julia = "^1.3.0"
+PDENLPModels = "0.2"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

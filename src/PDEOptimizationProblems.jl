@@ -68,6 +68,7 @@ const problems = [
 ]
 
 const number_of_problems = length(problems)
+const default_nvar = 10
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))
