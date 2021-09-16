@@ -64,3 +64,26 @@ function dynamicsir(args...; x0 = [1, 2], n = 10, T = 1, kwargs...)
   xin = zeros(ndofs)
   return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "dynamic-SIR")
 end
+
+dynamicsir_meta = Dict(
+  :name => "dynamicsir",
+  :domaindim => UInt8(1),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :unconstrained,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => false,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => false,
+)
+
+get_dynamicsir_meta(n::Integer = default_nvar) = (n, 0)

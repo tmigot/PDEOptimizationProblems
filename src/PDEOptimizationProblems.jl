@@ -83,12 +83,13 @@ const origins = [:academic, :modelling, :real, :unknown]
 const objtypes = [:none, :constant, :linear, :quadratic, :sum_of_squares, :other]
 const contypes = [:unconstrained, :linear, :quadratic, :general]
 const names = [
+  :name
   :domaindim
   :pbtype
   :nθ
   :ny
   :nu
-  :optimalvalue
+  :optimal_value
   :objtype
   :contype
   :origin
@@ -99,6 +100,7 @@ const names = [
 ]
 
 const types = [
+  String
   UInt8
   Symbol
   Int
@@ -140,5 +142,9 @@ Classification
 - `has_fixed_variables`: true if it has fixed variables
 """
 const meta = DataFrame(names .=> [Array{T}(undef, number_of_problems) for T in types])
+
+for name in names, i = 1:number_of_problems
+  meta[!, name][i] = eval(Meta.parse("$(problems[i])_meta"))[name]
+end
 
 end #end of module

@@ -79,3 +79,26 @@ function poissonboltzman2d(; n :: Int = 100)
     name = "2D-Poisson Boltzman",
   )
 end
+
+poissonboltzman2d_meta = Dict(
+  :name => "poissonboltzman2d",
+  :domaindim => UInt8(1),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :unconstrained,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => false,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => false,
+)
+
+get_poissonboltzman2d_meta(n::Integer = default_nvar) = (n, 0)
