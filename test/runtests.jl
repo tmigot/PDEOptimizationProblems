@@ -1,6 +1,8 @@
 #using Main.PDEOptimizationProblems, Main.PDENLPModels, Test
-using Gridap, PDENLPModels, Test
+using Gridap, NLPModels, PDENLPModels, Test
 using PDEOptimizationProblems
+
+include("utils.jl")
 
 # Test that every problem can be instantiated.
 for pb in PDEOptimizationProblems.problems
@@ -12,4 +14,6 @@ for pb in PDEOptimizationProblems.problems
   obj(nlp, nlp.meta.x0)
   nlp.meta.ncon != 0 && cons(nlp, nlp.meta.x0)
   hess(nlp, nlp.meta.x0, nlp.meta.y0)
+  # test meta information
+  meta_sanity(pb)
 end
