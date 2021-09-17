@@ -70,20 +70,20 @@ dynamicsir_meta = Dict(
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
-  :ny => 1,
-  :nu => 1,
+  :ny => 2,
+  :nu => 2,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
-  :contype => :unconstrained,
+  :contype => :general,
   :origin => :unknown,
   :deriv => typemax(UInt8),
   :has_cvx_obj => false,
   :has_cvx_con => false,
-  :has_equalities_only => false,
+  :has_equalities_only => true,
   :has_inequalities_only => false,
   :has_bounds => false,
-  :has_fixed_variables => false,
+  :has_fixed_variables => true,
 )
 
-get_dynamicsir_meta(n::Integer = default_nvar) = (n, 0)
+get_dynamicsir_meta(n::Integer = default_nvar) = (4 * n + 2, 2 * n)

@@ -37,11 +37,11 @@ end
 
 dirichlet_meta = Dict(
   :name => "dirichlet",
-  :domaindim => UInt8(1),
-  :pbtype => :yu,
+  :domaindim => UInt8(2),
+  :pbtype => :y,
   :nθ => 0,
   :ny => 1,
-  :nu => 1,
+  :nu => 0,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -56,4 +56,4 @@ dirichlet_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_dirichlet_meta(n::Integer = default_nvar) = (n, 0)
+get_dirichlet_meta(n::Integer = default_nvar) = (n - 1, 0)

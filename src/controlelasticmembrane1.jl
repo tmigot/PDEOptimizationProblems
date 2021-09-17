@@ -77,7 +77,7 @@ end
 
 controlelasticmembrane1_meta = Dict(
   :name => "controlelasticmembrane1",
-  :domaindim => UInt8(1),
+  :domaindim => UInt8(2),
   :pbtype => :yu,
   :nθ => 0,
   :ny => 1,
@@ -85,15 +85,15 @@ controlelasticmembrane1_meta = Dict(
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
-  :contype => :unconstrained,
+  :contype => :linear,
   :origin => :unknown,
   :deriv => typemax(UInt8),
   :has_cvx_obj => false,
   :has_cvx_con => false,
-  :has_equalities_only => false,
+  :has_equalities_only => true,
   :has_inequalities_only => false,
-  :has_bounds => false,
-  :has_fixed_variables => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
 )
 
-get_controlelasticmembrane1_meta(n::Integer = default_nvar) = (n, 0)
+get_controlelasticmembrane1_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)

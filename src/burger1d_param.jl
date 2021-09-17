@@ -58,22 +58,22 @@ end
 burger1d_param_meta = Dict(
   :name => "burger1d_param",
   :domaindim => UInt8(1),
-  :pbtype => :yu,
-  :nθ => 0,
+  :pbtype => :θyu,
+  :nθ => 1,
   :ny => 1,
   :nu => 1,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
-  :contype => :unconstrained,
+  :contype => :general,
   :origin => :unknown,
   :deriv => typemax(UInt8),
   :has_cvx_obj => false,
   :has_cvx_con => false,
-  :has_equalities_only => false,
+  :has_equalities_only => true,
   :has_inequalities_only => false,
   :has_bounds => false,
-  :has_fixed_variables => false,
+  :has_fixed_variables => true,
 )
 
-get_burger1d_param_meta(n::Integer = default_nvar) = (n, 0)
+get_burger1d_param_meta(n::Integer = default_nvar) = (n * 2 + 1, n - 1)

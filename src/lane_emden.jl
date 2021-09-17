@@ -37,10 +37,10 @@ end
 lane_emden_meta = Dict(
   :name => "lane_emden",
   :domaindim => UInt8(1),
-  :pbtype => :yu,
+  :pbtype => :y,
   :nθ => 0,
   :ny => 1,
-  :nu => 1,
+  :nu => 0,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -55,4 +55,4 @@ lane_emden_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_lane_emden_meta(n::Integer = default_nvar) = (n, 0)
+get_lane_emden_meta(n::Integer = default_nvar) = (n - 1, 0)

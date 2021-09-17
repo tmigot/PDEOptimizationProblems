@@ -39,10 +39,10 @@ end
 henon_meta = Dict(
   :name => "henon",
   :domaindim => UInt8(1),
-  :pbtype => :yu,
+  :pbtype => :y,
   :nθ => 0,
   :ny => 1,
-  :nu => 1,
+  :nu => 0,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -57,4 +57,4 @@ henon_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_henon_meta(n::Integer = default_nvar) = (n, 0)
+get_henon_meta(n::Integer = default_nvar) = (n - 1, 0)

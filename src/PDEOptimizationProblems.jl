@@ -81,7 +81,7 @@ end
 const pbtypes = [:θ, :y, :yu, :θy, :θyu]
 const origins = [:academic, :modelling, :real, :unknown]
 const objtypes = [:none, :constant, :linear, :quadratic, :sum_of_squares, :other]
-const contypes = [:unconstrained, :linear, :quadratic, :general]
+const contypes = [:unconstrained, :bounds, :linear, :quadratic, :general]
 const names = [
   :name
   :domaindim

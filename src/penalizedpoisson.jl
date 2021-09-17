@@ -42,11 +42,11 @@ end
 
 penalizedpoisson_meta = Dict(
   :name => "penalizedpoisson",
-  :domaindim => UInt8(1),
-  :pbtype => :yu,
+  :domaindim => UInt8(2),
+  :pbtype => :y,
   :nθ => 0,
   :ny => 1,
-  :nu => 1,
+  :nu => 0,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -61,4 +61,4 @@ penalizedpoisson_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_penalizedpoisson_meta(n::Integer = default_nvar) = (n, 0)
+get_penalizedpoisson_meta(n::Integer = default_nvar) = ((n - 1)^2, 0)

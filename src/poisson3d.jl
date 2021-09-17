@@ -54,7 +54,7 @@ end
 
 poisson3d_meta = Dict(
   :name => "poisson3d",
-  :domaindim => UInt8(1),
+  :domaindim => UInt8(3),
   :pbtype => :yu,
   :nθ => 0,
   :ny => 1,
@@ -73,4 +73,4 @@ poisson3d_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_poisson3d_meta(n::Integer = default_nvar) = (n, 0)
+get_poisson3d_meta(n::Integer = default_nvar) = ((n - 1)^3 + 2 * n^4, 0)

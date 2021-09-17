@@ -90,8 +90,8 @@ robot_meta = Dict(
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
-  :ny => 1,
-  :nu => 1,
+  :ny => 3,
+  :nu => 3,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -106,4 +106,4 @@ robot_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_robot_meta(n::Integer = default_nvar) = (n, 0)
+get_robot_meta(n::Integer = default_nvar) = (2 * 3 * n, 3 * (n - 1))
