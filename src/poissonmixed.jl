@@ -46,6 +46,29 @@ function poissonmixed(args...; n = 3, kwargs...)
   nrj = MixedEnergyFETerm(fk, trian, 2, true, Ug)
 
   nUg = num_free_dofs(Ug)
-  x0 = zeros(nUg + 2) #zeros(nUg + 2)
+  x0 = zeros(nUg + 2)
   return GridapPDENLPModel(x0, nrj, Ug, V0, op, name = "poissonmixed")
 end
+
+poissonmixed_meta = Dict(
+  :name => "poissonmixed",
+  :domaindim => UInt8(2),
+  :pbtype => :θy,
+  :nθ => 2,
+  :ny => 1,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => true,
+)
+
+get_poissonmixed_meta(n::Integer = default_nvar) = ((n - 1)^2 + 2, (n - 1)^2)

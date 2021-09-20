@@ -65,3 +65,26 @@ function torebrachistochrone(args...; n = 3, kwargs...)
     name = "Brachistochrone on tore",
   )
 end
+
+torebrachistochrone_meta = Dict(
+  :name => "torebrachistochrone",
+  :domaindim => UInt8(1),
+  :pbtype => :y,
+  :nθ => 0,
+  :ny => 2,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :bounds,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => false,
+  :has_inequalities_only => false,
+  :has_bounds => true,
+  :has_fixed_variables => false,
+)
+
+get_torebrachistochrone_meta(n::Integer = default_nvar) = (2 * (n - 1), 0)

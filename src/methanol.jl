@@ -89,3 +89,26 @@ function methanol(args...; n = 100, kwargs...)
     name = "Methanol to Hydrocarbons",
   )
 end
+
+methanol_meta = Dict(
+  :name => "methanol",
+  :domaindim => UInt8(1),
+  :pbtype => :θy,
+  :nθ => 5,
+  :ny => 3,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
+)
+
+get_methanol_meta(n::Integer = default_nvar) = (3 * (n + 1) + 5, 3 * (n + 1))

@@ -92,3 +92,26 @@ function burger1d(args...;n :: Int = 512, kwargs...)
 
   return nlp
 end
+
+burger1d_meta = Dict(
+  :name => "burger1d",
+  :domaindim => UInt8(1),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => true,
+)
+
+get_burger1d_meta(n::Integer = default_nvar) = (3 * n - 1, n - 1)

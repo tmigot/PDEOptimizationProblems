@@ -32,3 +32,26 @@ function sis(args...; x0 = [1, 2], n = 10, a = 0.2, b = 0.7, T = 1, kwargs...)
   xin = zeros(ndofs)
   return GridapPDENLPModel(xin, NoFETerm(), Y, X, op_sis, name = "SIS")
 end
+
+sis_meta = Dict(
+  :name => "sis",
+  :domaindim => UInt8(1),
+  :pbtype => :y,
+  :nθ => 0,
+  :ny => 2,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :none,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => true,
+)
+
+get_sis_meta(n::Integer = default_nvar) = (2 * n, 2 * n)

@@ -98,3 +98,26 @@ function glider(args...; n = 100, kwargs...)
     name = "Hang Glider",
   )
 end
+
+glider_meta = Dict(
+  :name => "glider",
+  :domaindim => UInt8(1),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 4,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :linear,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8), # not everywhere
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
+)
+
+get_glider_meta(n::Integer = default_nvar) = (3 * (n - 1) + 3 * n, 3 * (n - 1) + n)

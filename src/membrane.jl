@@ -46,6 +46,29 @@ function membrane(args...; n = 3, kwargs...)
     V0,
     lvar = lb,
     uvar = Inf * ones(nU0),
-    name = "MOREBV",
+    name = "membrane",
   )
 end
+
+membrane_meta = Dict(
+  :name => "membrane",
+  :domaindim => UInt8(2),
+  :pbtype => :y,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :unconstrained,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => false,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => false,
+)
+
+get_membrane_meta(n::Integer = default_nvar) = ((n - 1)^2, 0)

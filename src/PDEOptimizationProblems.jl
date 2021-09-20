@@ -61,13 +61,14 @@ const problems = [
   "gasoil", # discrete objective function, now I use interpolation
   "methanol", # discrete objective function, now I use interpolation
   # "robot", # minimize final time + final time constraints
-  "steering", # minimize final time + final time constraints
+  "steering", # minimize final time + final time constraints # issue with: https://github.com/gridap/Gridap.jl/issues/659
   "rocket", # maximize final time value of unknown function
   "glider", # maximize final time value of unknown function
   "membrane", # not the correct boundary condition
 ]
 
 const number_of_problems = length(problems)
+const default_nvar = 10
 
 path = dirname(@__FILE__)
 files = filter(x -> x[end-2:end] == ".jl", readdir(path))
@@ -80,14 +81,15 @@ end
 const pbtypes = [:θ, :y, :yu, :θy, :θyu]
 const origins = [:academic, :modelling, :real, :unknown]
 const objtypes = [:none, :constant, :linear, :quadratic, :sum_of_squares, :other]
-const contypes = [:unconstrained, :linear, :quadratic, :general]
+const contypes = [:unconstrained, :bounds, :linear, :quadratic, :general]
 const names = [
+  :name
   :domaindim
   :pbtype
   :nθ
   :ny
   :nu
-  :optimalvalue
+  :optimal_value
   :objtype
   :contype
   :origin
@@ -98,6 +100,7 @@ const names = [
 ]
 
 const types = [
+  String
   UInt8
   Symbol
   Int
@@ -139,5 +142,9 @@ Classification
 - `has_fixed_variables`: true if it has fixed variables
 """
 const meta = DataFrame(names .=> [Array{T}(undef, number_of_problems) for T in types])
+
+for name in names, i = 1:number_of_problems
+  meta[!, name][i] = eval(Meta.parse("$(problems[i])_meta"))[name]
+end
 
 end #end of module

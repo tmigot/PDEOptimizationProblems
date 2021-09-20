@@ -72,3 +72,26 @@ function catmix(args...;n :: Int = 100, kwargs...)
     name = "Catalyst Mixing",
   )
 end
+
+catmix_meta = Dict(
+  :name => "catmix",
+  :domaindim => UInt8(1),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 2,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
+)
+
+get_catmix_meta(n::Integer = default_nvar) = (4 * n, 2 * n)

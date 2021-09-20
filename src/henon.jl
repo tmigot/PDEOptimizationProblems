@@ -35,3 +35,26 @@ function henon(args...; n = 10, kwargs...)
     name = "Transition States for the Henon Problem",
   )
 end
+
+henon_meta = Dict(
+  :name => "henon",
+  :domaindim => UInt8(1),
+  :pbtype => :y,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :unconstrained,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => false,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => false,
+)
+
+get_henon_meta(n::Integer = default_nvar) = (n - 1, 0)

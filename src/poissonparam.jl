@@ -43,3 +43,26 @@ function poissonparam(args...; n = 3, kwargs...)
   xs = rand(nUg + 1)
   return GridapPDENLPModel(xs, nrj, Ug, V0, op, name = "poissonparam")
 end
+
+poissonparam_meta = Dict(
+  :name => "poissonparam",
+  :domaindim => UInt8(2),
+  :pbtype => :θy,
+  :nθ => 1,
+  :ny => 1,
+  :nu => 0,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => false,
+  :has_fixed_variables => true,
+)
+
+get_poissonparam_meta(n::Integer = default_nvar) = ((n - 1)^2 + 1, (n - 1)^2)

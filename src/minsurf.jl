@@ -76,3 +76,26 @@ function minsurf(args...; n = 50, kwargs...)
     name = "Minimal Surface with Obstacle",
   )
 end
+
+minsurf_meta = Dict(
+  :name => "minsurf",
+  :domaindim => UInt8(2),
+  :pbtype => :yu,
+  :nθ => 0,
+  :ny => 1,
+  :nu => 1,
+  :optimal_value => NaN,
+  :is_infeasible => false,
+  :objtype => :sum_of_squares,
+  :contype => :general,
+  :origin => :unknown,
+  :deriv => typemax(UInt8),
+  :has_cvx_obj => false,
+  :has_cvx_con => false,
+  :has_equalities_only => true,
+  :has_inequalities_only => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
+)
+
+get_minsurf_meta(n::Integer = default_nvar) = ((n - 1)^2 + (n + 1)^2, (n - 1)^2)
