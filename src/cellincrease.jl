@@ -11,8 +11,8 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
 
   Vcon = TestFESpace(model, reffe, conformity = :L2)
   Ucon = TrialFESpace(Vcon)
-  Xcon = MultiFieldFESpace([Vcon])
-  Ycon = MultiFieldFESpace([Ucon])
+  Xcon = MultiFieldFESpace([Vcon, Vcon])
+  Ycon = MultiFieldFESpace([Ucon, Ucon])
 
   function f(y, u)
     cf, pf = y
@@ -30,16 +30,17 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  conv(u, ∇u) = (∇u')⋅u #(∇u ⋅ one(∇u)) ⊙ u
+  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = conv ∘ (v, ∇(u)) #v⊙conv(u,∇(u))
 
   function res(y, u, v)
     cf, pf = y
     p, q = v
-    ∫(-p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)))dΩ #  c(cf, p) + c(pf, q) )dΩ  + q * (u * kr * cf * (1.0 - cf - pf) - kp * pf * pf)
+    uf, ufo = u # how to extract a SingleField from a MultiField of size 1?
+    ∫(-p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) + c(cf, p) + c(pf, q) + q * (kr * cf * (1.0 - cf - pf) * uf - kp * pf * pf) )dΩ
   end
 
-  Y = MultiFieldFESpace([UI, US, Ucon])
+  Y = MultiFieldFESpace([UI, US, Ucon, Ucon])
   op_sir = FEOperator(res, Ypde, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
@@ -52,7 +53,7 @@ cellincrease_meta = Dict(
   :pbtype => :yu,
   :nθ => 0,
   :ny => 2,
-  :nu => 1,
+  :nu => 2,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -67,4 +68,4 @@ cellincrease_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_cellincrease_meta(n::Integer = default_nvar) = (4 * n, 2 * n)
+get_cellincrease_meta(n::Integer = default_nvar) = (6 * n, 2 * n)
