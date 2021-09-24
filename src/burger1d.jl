@@ -23,17 +23,17 @@ Suggestions:
 - FEOperatorFromTerms has only one term. We might consider splitting linear and
 nonlinear terms.
 """
-function burger1d(args...;n :: Int = 512, kwargs...)
+function burger1d(args...; n::Int = 512, kwargs...)
 
   #Domain
-  domain = (0,1)
+  domain = (0, 1)
   partition = n
-  model = CartesianDiscreteModel(domain,partition)
+  model = CartesianDiscreteModel(domain, partition)
 
   #Definition of the spaces:
   labels = get_face_labeling(model)
-  add_tag_from_tags!(labels,"diri1",[2])
-  add_tag_from_tags!(labels,"diri0",[1])
+  add_tag_from_tags!(labels, "diri1", [2])
+  add_tag_from_tags!(labels, "diri0", [1])
 
   trian = Triangulation(model)
   degree = 1
@@ -64,15 +64,15 @@ function burger1d(args...;n :: Int = 512, kwargs...)
   end
 
   #Definition of the constraint operator
-  h(x) = 2*(nu + x[1]^3)
+  h(x) = 2 * (nu + x[1]^3)
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = v ⊙ (conv ∘ (u, ∇(u)))
   nu = 0.08
   function res(y, u, v)
-    ∫(-nu*(∇(v)⊙∇(y)) + c(y,v) - v * u - v * h)dΩ
+    ∫(-nu * (∇(v) ⊙ ∇(y)) + c(y, v) - v * u - v * h)dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
-    
+
   nvar_pde = Gridap.FESpaces.num_free_dofs(Ypde)
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
   x0 = zeros(nvar_pde + nvar_con)

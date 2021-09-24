@@ -1,43 +1,37 @@
 # Catalyst Mixing COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
-function catmix(args...;n :: Int = 100, kwargs...)
+function catmix(args...; n::Int = 100, kwargs...)
 
   #Domain
-  domain = (0,1)
+  domain = (0, 1)
   partition = n
-  model = CartesianDiscreteModel(domain,partition)
-  
+  model = CartesianDiscreteModel(domain, partition)
+
   #Definition of the spaces:
   labels = get_face_labeling(model)
-  add_tag_from_tags!(labels,"diri0",[1])
-  
+  add_tag_from_tags!(labels, "diri0", [1])
+
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    labels = labels,
-    dirichlet_tags = ["diri0"],
-  )
+  V = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
   Y1 = TrialFESpace(V, 1.0)
   Y2 = TrialFESpace(V, 0.0)
   Ypde = MultiFieldFESpace([Y1, Y2])
   Xpde = MultiFieldFESpace([V, V])
   Xcon = TestFESpace(model, reffe; conformity = :L2)
   Ycon = TrialFESpace(Xcon)
-  
+
   #objective function:
   function f(y, u)
     y1, y2 = y
     ∫(y1 + y2)dΩ # should be just the final time
   end
-  
+
   #Definition of the constraint operator
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = v ⊙ (conv ∘ (u, ∇(u)))
@@ -45,12 +39,11 @@ function catmix(args...;n :: Int = 100, kwargs...)
     y1, y2 = y
     v1, v2 = v
     return ∫(
-      c(y1, v1) - v1 * u * (10 * y2 - y1) +
-      c(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u)
+      c(y1, v1) - v1 * u * (10 * y2 - y1) + c(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u),
     )dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
-      
+
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
   # u = 0, y1 = 1, y2 = 0
   x0 = vcat(

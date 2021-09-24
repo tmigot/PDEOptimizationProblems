@@ -25,18 +25,15 @@ function steering(args...; n = 400, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  Γ₀ = BoundaryTriangulation(model, tags=["diri0"])
+  Γ₀ = BoundaryTriangulation(model, tags = ["diri0"])
   dΓ₀ = Measure(Γ₀, degree)
-  Γ₁ = BoundaryTriangulation(model, tags=["diri1"])
+  Γ₁ = BoundaryTriangulation(model, tags = ["diri1"])
   dΓ₁ = Measure(Γ₁, degree)
 
   function res(y, u, v)
     y1, y2 = y
     p1, p2 = v
-    return ∫( 
-      ((∇(p1)⋅∇(y1)) - a * (cos ∘ u)) +
-      ((∇(p2)⋅∇(y2)) - a * (sin ∘ u))
-    )dΩ #  + ∫( p1 * 0 + p2 * 0 )*dΓ₀
+    return ∫(((∇(p1) ⋅ ∇(y1)) - a * (cos ∘ u)) + ((∇(p2) ⋅ ∇(y2)) - a * (sin ∘ u)))dΩ #  + ∫( p1 * 0 + p2 * 0 )*dΓ₀
   end
   op = FEOperator(res, Ypde, Xpde)
   #=
@@ -50,7 +47,7 @@ function steering(args...; n = 400, kwargs...)
   cell_xs = get_cell_coordinates(trian)
   midpoint(xs) = sum(xs) / length(xs)
   cell_xm = lazy_map(midpoint, cell_xs)
-  cell_l = lazy_map(x -> 5 * (x/T), cell_xm)
+  cell_l = lazy_map(x -> 5 * (x / T), cell_xm)
   xin = vcat(
     get_free_values(Gridap.FESpaces.interpolate(cell_l, Yi)),
     zeros(ndofs_pde),
@@ -64,8 +61,8 @@ function steering(args...; n = 400, kwargs...)
     Xpde,
     Xcon,
     op,
-    lvaru = -pi/2 * ones(ndofs_con),
-    uvaru = pi/2 * ones(ndofs_con),
+    lvaru = -pi / 2 * ones(ndofs_con),
+    uvaru = pi / 2 * ones(ndofs_con),
     name = "Particle Steering",
   )
 end

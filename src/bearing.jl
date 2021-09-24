@@ -2,12 +2,11 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n= 50, 75, 100
 function bearing(args...; n = 50, kwargs...)
-  
   ϵ = 0.1
   b = 10
 
   domain = (0, 2pi, 0, 2b)
-  model = CartesianDiscreteModel(domain, (n,n))
+  model = CartesianDiscreteModel(domain, (n, n))
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
@@ -23,13 +22,7 @@ function bearing(args...; n = 50, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    labels = labels,
-    dirichlet_tags = ["diri0"],
-  )
+  V = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
   U = TrialFESpace(V, 0.0)
   nU = Gridap.FESpaces.num_free_dofs(U)
   # x0 = max(sin(x), 0)

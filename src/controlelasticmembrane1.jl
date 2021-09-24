@@ -16,12 +16,12 @@ The force term is h(x_1,x_2) = - sin( ω x_1)sin( ω x_2) with  ω = π - 1/8.
 In this first case, the bound constraints are constants with
 umin(x) = 0.0 and umax(x) = 1.0.
 """
-function controlelasticmembrane1(args...; n :: Int = 10, kargs...)
+function controlelasticmembrane1(args...; n::Int = 10, kargs...)
 
   #Domain
-  domain = (-1,1,-1,1)
-  partition = (n,n)
-  model = CartesianDiscreteModel(domain,partition)
+  domain = (-1, 1, -1, 1)
+  partition = (n, n)
+  model = CartesianDiscreteModel(domain, partition)
 
   #Definition of the spaces:
   valuetype = Float64
@@ -33,7 +33,7 @@ function controlelasticmembrane1(args...; n :: Int = 10, kargs...)
   reffe_con = ReferenceFE(lagrangian, valuetype, 1)
   Xcon = TestFESpace(model, reffe_con; conformity = :H1)
   Ycon = TrialFESpace(Xcon)
-    Y = MultiFieldFESpace([Ypde, Ycon])
+  Y = MultiFieldFESpace([Ypde, Ycon])
 
   # Integration machinery
   trian = Triangulation(model)
@@ -52,7 +52,7 @@ function controlelasticmembrane1(args...; n :: Int = 10, kargs...)
   h(x) = -sin(ω * x[1]) * sin(ω * x[2])
   function res(yu, v)
     y, u = yu
-    ∫(∇(v)⋅∇(y) - v * u) * dΩ #- v * h
+    ∫(∇(v) ⋅ ∇(y) - v * u) * dΩ #- v * h
   end
   rhs(v) = ∫(v * h) * dΩ
   op = AffineFEOperator(res, rhs, Y, Xpde)
@@ -96,4 +96,5 @@ controlelasticmembrane1_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_controlelasticmembrane1_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)
+get_controlelasticmembrane1_meta(n::Integer = default_nvar) =
+  ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)

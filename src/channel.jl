@@ -9,9 +9,15 @@ function channel(args...; n = 400, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  Vb = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0", "diri1"])
-  U1 = TrialFESpace(Vb, [0 , 1])
-  U0 = TrialFESpace(Vb, [0 , 0])
+  Vb = TestFESpace(
+    model,
+    reffe;
+    conformity = :H1,
+    labels = labels,
+    dirichlet_tags = ["diri0", "diri1"],
+  )
+  U1 = TrialFESpace(Vb, [0, 1])
+  U0 = TrialFESpace(Vb, [0, 0])
   V = TestFESpace(model, reffe; conformity = :H1)
   U = TrialFESpace(V)
   X = MultiFieldFESpace([Vb, Vb, V, V])
@@ -27,7 +33,10 @@ function channel(args...; n = 400, kwargs...)
   function res(y, v)
     y1, y2, y3, y4 = y
     p1, p2, p3, p4 = v
-    ∫(c(y1, p1) - p1 * y2 + c(y2, p2) - p2 * y3 + c(y3, p3) - p3 * y3  + c(y4, p4) - p4 * R * (y2 * y3 - y1 * y4) )dΩ
+    ∫(
+      c(y1, p1) - p1 * y2 + c(y2, p2) - p2 * y3 + c(y3, p3) - p3 * y3 + c(y4, p4) -
+      p4 * R * (y2 * y3 - y1 * y4),
+    )dΩ
   end
   op = FEOperator(res, Y, X)
 

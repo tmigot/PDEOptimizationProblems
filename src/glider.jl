@@ -2,7 +2,6 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
 function glider(args...; n = 100, kwargs...)
-
   model = CartesianDiscreteModel((0, 1), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition
@@ -21,7 +20,13 @@ function glider(args...; n = 100, kwargs...)
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
   V0 = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
-  V1 = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0", "diri1"])
+  V1 = TestFESpace(
+    model,
+    reffe;
+    conformity = :H1,
+    labels = labels,
+    dirichlet_tags = ["diri0", "diri1"],
+  )
   Yx = TrialFESpace(V0, 0.0)
   Yxp = TrialFESpace(V1, [13.23, 13.23])
   Yy = TrialFESpace(V1, [1000.0, 900.0])
@@ -42,7 +47,7 @@ function glider(args...; n = 100, kwargs...)
   c(u, v) = conv ∘ (v, ∇(u))
 
   r(x) = (x / rᵪ - 2.5) * (x / rᵪ - 2.5)
-  u(x) = uᵪ * (1 - r(x)) * (exp ∘ (-r(x)) )
+  u(x) = uᵪ * (1 - r(x)) * (exp ∘ (-r(x)))
   w(x, yp) = yp - u(x)
   vf(x, xp, yp) = sqrt ∘ (xp * xp + w(x, yp) * w(x, yp))
   D(x, xp, yp, cL) = 0.5 * ρ * S * (c₀ + c₁ * cL * cL) * vf(x, xp, yp)
@@ -50,18 +55,18 @@ function glider(args...; n = 100, kwargs...)
   function res(xy, cL, v)
     x, xp, y, yp = xy
     px, pxp, py, pyp = v
-    return ∫( 
+    return ∫(
       (c(x, px) - xp * px) +
-      (c(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp )) +
+      (c(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp)) +
       (c(y, py) - py * yp) +
-      (c(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp)))
+      (c(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))),
     )dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
 
   function f(y, u)
     h, v, m = y
-    return ∫( -h )dΩ # we should maximize the altitude at final time
+    return ∫(-h)dΩ # we should maximize the altitude at final time
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
@@ -76,7 +81,7 @@ function glider(args...; n = 100, kwargs...)
     13.23 * ones(Gridap.FESpaces.num_free_dofs(Yxp)),
     get_free_values(Gridap.FESpaces.interpolate(cell_y, Yy)),
     -1.288 * ones(Gridap.FESpaces.num_free_dofs(Yyp)),
-    cmax/2 * ones(ndofs_con),
+    cmax / 2 * ones(ndofs_con),
   )
   return GridapPDENLPModel(
     xin,

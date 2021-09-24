@@ -7,7 +7,7 @@ function torsion(args...; n = 3, kwargs...)
   #La fonction objectif f:
   c = 5.0
 
-  model = CartesianDiscreteModel(domain, (n,n))
+  model = CartesianDiscreteModel(domain, (n, n))
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
@@ -17,19 +17,9 @@ function torsion(args...; n = 3, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    labels = labels,
-    dirichlet_tags = ["diri0"],
-  )
+  V = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
   U = TrialFESpace(V, 0.0)
-  V0 = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-  )
+  V0 = TestFESpace(model, reffe; conformity = :H1)
   U0 = TrialFESpace(V0)
   Xpde = MultiFieldFESpace([V, V0, V0])
   Ypde = MultiFieldFESpace([U, U0, U0])
@@ -38,13 +28,13 @@ function torsion(args...; n = 3, kwargs...)
   function res(ys, v)
     y, s1, s2 = ys
     v1, v2 = v
-    return ∫(v1 * (y+s1-dxD) + v2 * (y-s2-dxD)) * dΩ  # |v| ≤ dist(x, ∂D)
+    return ∫(v1 * (y + s1 - dxD) + v2 * (y - s2 - dxD)) * dΩ  # |v| ≤ dist(x, ∂D)
   end
   op = FEOperator(res, Ypde, Xpde)
 
   function f(ys)
     y, s1, s2 = ys
-    return ∫(0.5 * ∇(y) ⊙ ∇(y) - c * y) * dΩ 
+    return ∫(0.5 * ∇(y) ⊙ ∇(y) - c * y) * dΩ
   end
 
   nU = Gridap.FESpaces.num_free_dofs(Ypde)

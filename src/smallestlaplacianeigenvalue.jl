@@ -23,12 +23,12 @@ TODO:
 - does the 1 work as it is? or should it be put in lcon, ucon?
 - it is 1D for now.
 """
-function smallestlaplacianeigenvalue(; n :: Int = 10, args...)
+function smallestlaplacianeigenvalue(; n::Int = 10, args...)
 
   #Domain
-  domain = (0,1)
+  domain = (0, 1)
   partition = n
-  model = CartesianDiscreteModel(domain,partition)
+  model = CartesianDiscreteModel(domain, partition)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
@@ -43,23 +43,16 @@ function smallestlaplacianeigenvalue(; n :: Int = 10, args...)
 
   #Now we move to the optimization:
   function f(y)
-    ∫(∇(y)⋅∇(y)) * dΩ
+    ∫(∇(y) ⋅ ∇(y)) * dΩ
   end
 
   #Definition of the constraint operator
   function res(y, v)
-    ∫((y*y - 1) * v) * dΩ
+    ∫((y * y - 1) * v) * dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
   xin = zeros(Gridap.FESpaces.num_free_dofs(Ypde))
-  return GridapPDENLPModel(xin,
-  f,
-  trian,
-  Ypde,
-  Xpde,
-  op,
-  name = "smallestLaplacianeigenvalue",
-  )
+  return GridapPDENLPModel(xin, f, trian, Ypde, Xpde, op, name = "smallestLaplacianeigenvalue")
 end
 
 smallestlaplacianeigenvalue_meta = Dict(

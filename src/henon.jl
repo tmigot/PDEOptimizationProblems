@@ -2,7 +2,6 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=10, 20, 40
 function henon(args...; n = 10, kwargs...)
-
   domain = (-1, 1, -1, 1)
   model = CartesianDiscreteModel(domain, n)
 
@@ -13,17 +12,12 @@ function henon(args...; n = 10, kwargs...)
   ϵ = 0.1
   s(x) = 0.25 * norm(x)
   function f(y)
-    ∫( 0.5 * (∇(y) ⊙ ∇(y)) - s * y * y * y * y) * dΩ
+    ∫(0.5 * (∇(y) ⊙ ∇(y)) - s * y * y * y * y) * dΩ
   end
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V0 = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    dirichlet_tags = "boundary",
-  )
+  V0 = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "boundary")
   U0 = TrialFESpace(V0, 0.0)
 
   return GridapPDENLPModel(

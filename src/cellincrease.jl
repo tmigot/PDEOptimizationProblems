@@ -37,7 +37,12 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
     cf, pf = y
     p, q = v
     uf, ufo = u # how to extract a SingleField from a MultiField of size 1?
-    ∫(-p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) + c(cf, p) + c(pf, q) + q * (kr * cf * (1.0 - cf - pf) * uf - kp * pf * pf) )dΩ
+    ∫(
+      -p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) +
+      c(cf, p) +
+      c(pf, q) +
+      q * (kr * cf * (1.0 - cf - pf) * uf - kp * pf * pf),
+    )dΩ
   end
 
   Y = MultiFieldFESpace([UI, US, Ucon, Ucon])
