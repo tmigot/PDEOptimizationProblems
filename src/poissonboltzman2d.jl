@@ -24,23 +24,23 @@ The specificity of the problem:
 - quadratic objective function;
 - nonlinear constraints with AD jacobian;
 """
-function poissonboltzman2d(; n :: Int = 100)
+function poissonboltzman2d(; n::Int = 100)
 
   #Domain
-  domain = (-1,1,-1,1)
+  domain = (-1, 1, -1, 1)
   partition = (n, n)
-  model = CartesianDiscreteModel(domain,partition)
+  model = CartesianDiscreteModel(domain, partition)
 
   #Definition of the spaces:
   order = 2
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, order)
-  Xpde = TestFESpace(model, reffe; conformity=:H1, dirichlet_tags="boundary")
+  Xpde = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "boundary")
   y0(x) = 0.0
   Ypde = TrialFESpace(Xpde, y0)
 
   reffe_con = ReferenceFE(lagrangian, valuetype, 1)
-  Xcon = TestFESpace(model, reffe_con; conformity=:H1)
+  Xcon = TestFESpace(model, reffe_con; conformity = :H1)
   Ycon = TrialFESpace(Xcon)
   Y = MultiFieldFESpace([Ypde, Ycon])
 
@@ -50,34 +50,24 @@ function poissonboltzman2d(; n :: Int = 100)
   dΩ = Measure(trian, degree)
 
   #Objective function:
-  yd(x) = min(x[1]-0.25, 0.75-x[1],x[2]-0.25, 0.75-x[2])>=0. ? 10. : 5.
+  yd(x) = min(x[1] - 0.25, 0.75 - x[1], x[2] - 0.25, 0.75 - x[2]) >= 0.0 ? 10.0 : 5.0
   α = 1e-4
   function f(y, u)
     ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
   end
 
   #Definition of the constraint operator
-  ω = π - 1/8
-  h(x) = - sin( ω*x[1])*sin( ω*x[2])
+  ω = π - 1 / 8
+  h(x) = -sin(ω * x[1]) * sin(ω * x[2])
   function res(y, u, v)
     #∇(v)⊙∇(y) + sinh(y)*v - u*v - v * h
-    ∫(∇(v)⋅∇(y) + (sinh ∘ y) * v - u*v - v * h) * dΩ
+    ∫(∇(v) ⋅ ∇(y) + (sinh ∘ y) * v - u * v - v * h) * dΩ
     #operate(tanh,ph)
   end
   op = FEOperator(res, Y, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(
-    xin,
-    f,
-    trian,
-    Ypde,
-    Ycon,
-    Xpde,
-    Xcon,
-    op,
-    name = "2D-Poisson Boltzman",
-  )
+  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "2D-Poisson Boltzman")
 end
 
 poissonboltzman2d_meta = Dict(
@@ -101,4 +91,4 @@ poissonboltzman2d_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_poissonboltzman2d_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2 )
+get_poissonboltzman2d_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)

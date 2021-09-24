@@ -1,16 +1,16 @@
-function _poissonwithNeumannandDirichlet(args...;kwargs...)
+function _poissonwithNeumannandDirichlet(args...; kwargs...)
   #model = DiscreteModelFromFile("https://github.com/gridap/Tutorials/tree/master/models/model.json")
   model = DiscreteModelFromFile("models/model.json")
   #writevtk(model,"model")
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  Xpde = TestFESpace(model, reffe; conformity=:H1, dirichlet_tags="sides")
+  Xpde = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "sides")
 
   g(x) = 2.0
   Ypde = TrialFESpace(Xpde, g)
 
-  Xcon = TestFESpace(model, reffe; conformity=:H1)
+  Xcon = TestFESpace(model, reffe; conformity = :H1)
   Ycon = TrialFESpace(Xcon)
 
   Y = MultiFieldFESpace([Ypde, Ycon])
@@ -20,10 +20,10 @@ function _poissonwithNeumannandDirichlet(args...;kwargs...)
   dΩ = Measure(trian, degree)
 
   neumanntags = ["circle", "triangle", "square"]
-  btrian = BoundaryTriangulation(model,neumanntags)
+  btrian = BoundaryTriangulation(model, neumanntags)
   dΩᵦ = Measure(btrian, degree)
 
-  ybis(x) =  x[1]^2+x[2]^2
+  ybis(x) = x[1]^2 + x[2]^2
   function f(y, u)
     ∫(0.5 * (ybis - y) * (ybis - y) + 0.5 * u * u) * dΩ
   end
@@ -43,15 +43,25 @@ function _poissonwithNeumannandDirichlet(args...;kwargs...)
   end
   #If we use a FETerm here, there is an issue with get_nnz.
   topt_Γ = FESource(res_Γs, btrian, bquad) #FETerm(res_Γ, btrian, bquad)#FESource(res_Γs, btrian, bquad)
-=#
+  =#
   function res(y, u, v)
-    ∫( ∇(v)⊙∇(y) - v*u ) * dΩ + ∫(-v*h) * dΩᵦ
+    ∫(∇(v) ⊙ ∇(y) - v * u) * dΩ + ∫(-v * h) * dΩᵦ
   end
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
   op = FEOperator(res, Ypde, Xpde, topt_Ω, topt_Γ)
 
-  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "poisson with Neumann and Dirichlet")
+  return GridapPDENLPModel(
+    xin,
+    f,
+    trian,
+    Ypde,
+    Ycon,
+    Xpde,
+    Xcon,
+    op,
+    name = "poisson with Neumann and Dirichlet",
+  )
 end
 
 _poissonwithNeumannandDirichlet_meta = Dict(

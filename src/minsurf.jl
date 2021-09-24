@@ -2,19 +2,18 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n= 50, 75, 100
 function minsurf(args...; n = 50, kwargs...)
-
   domain = (0, 1, 0, 1)
-  model = CartesianDiscreteModel(domain, (n,n))
+  model = CartesianDiscreteModel(domain, (n, n))
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
 
   function f(y, s)
-    return ∫(sqrt ∘ (1. + (∇(y) ⊙ ∇(y)) )) * dΩ
+    return ∫(sqrt ∘ (1.0 + (∇(y) ⊙ ∇(y)))) * dΩ
   end
 
   function vD(x)
-    if x[2]==0 || x[2]==1
+    if x[2] == 0 || x[2] == 1
       return 1.0 - (2 * x[1] - 1.0)^2
     else
       return 0.0
@@ -25,29 +24,20 @@ function minsurf(args...; n = 50, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    dirichlet_tags="boundary",
-  )
+  V = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "boundary")
   U = TrialFESpace(V, vD)
-  Vs = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-  )
+  Vs = TestFESpace(model, reffe; conformity = :H1)
   Us = TrialFESpace(Vs)
 
   function vL(x)
-    if (abs(x[1]-0.5) ≤ 0.25) || (abs(x[2]-0.5) ≤ 0.25)
+    if (abs(x[1] - 0.5) ≤ 0.25) || (abs(x[2] - 0.5) ≤ 0.25)
       return 1.0
     else
       return 0.0
     end
   end
   function res(y, s, v)
-    return ∫( v * (s - y + vL) ) * dΩ
+    return ∫(v * (s - y + vL)) * dΩ
   end
   op = FEOperator(res, U, V)
 
@@ -58,10 +48,7 @@ function minsurf(args...; n = 50, kwargs...)
   midpoint(xs) = sum(xs) / length(xs)
   cell_xm = lazy_map(midpoint, cell_xs)
   cell_y = lazy_map(x -> 1 - (2 * x[1] - 1)^2, cell_xm)
-  xin = vcat(
-    get_free_values(Gridap.FESpaces.interpolate(cell_y, U)),
-    zeros(nUs),
-  )
+  xin = vcat(get_free_values(Gridap.FESpaces.interpolate(cell_y, U)), zeros(nUs))
   return GridapPDENLPModel(
     xin,
     f,

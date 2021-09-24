@@ -15,7 +15,7 @@ The force term is h(x_1,x_2) = - sin( ω x_1)sin( ω x_2) with  ω = π - 1/8.
 In this second case, the bound constraints are
 umin(x) = x_1+x_2 and umax(x) = x_1^2+x_2^2 applied at the midpoint of the cells.
 """
-function controlelasticmembrane2(; n :: Int = 10, args...)
+function controlelasticmembrane2(; n::Int = 10, args...)
 
   # Domain
   domain = (-1, 1, -1, 1)
@@ -51,16 +51,16 @@ function controlelasticmembrane2(; n :: Int = 10, args...)
   h(x) = -sin(ω * x[1]) * sin(ω * x[2])
   function res(yu, v)
     y, u = yu
-    ∫(∇(v)⋅∇(y) - v * u) * dΩ #- v * h
+    ∫(∇(v) ⋅ ∇(y) - v * u) * dΩ #- v * h
   end
   rhs(v) = ∫(v * h) * dΩ
   op = AffineFEOperator(res, rhs, Y, Xpde)
 
   #It is easy to have a constant bounds, but what about a nonlinear one:
-  umin(x) = x[1]+x[2]
-  umax(x) = x[1]^2+x[2]^2
+  umin(x) = x[1] + x[2]
+  umax(x) = x[1]^2 + x[2]^2
   cell_xs = get_cell_coordinates(trian)
-  midpoint(xs) = sum(xs)/length(xs)
+  midpoint(xs) = sum(xs) / length(xs)
   cell_xm = lazy_map(midpoint, cell_xs) #this is a vector of size num_cells(trian)
   cell_umin = lazy_map(umin, cell_xm) #this is a vector of size num_cells(trian)
   cell_umax = lazy_map(umax, cell_xm) #this is a vector of size num_cells(trian)
@@ -70,7 +70,7 @@ function controlelasticmembrane2(; n :: Int = 10, args...)
 
   npde = Gridap.FESpaces.num_free_dofs(Ypde)
   ncon = Gridap.FESpaces.num_free_dofs(Ycon)
-  
+
   return GridapPDENLPModel(
     zeros(npde + ncon),
     f,
@@ -107,4 +107,5 @@ controlelasticmembrane2_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_controlelasticmembrane2_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)
+get_controlelasticmembrane2_meta(n::Integer = default_nvar) =
+  ((2 * n - 1)^2 + (n + 1)^2, (2 * n - 1)^2)

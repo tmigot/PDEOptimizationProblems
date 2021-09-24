@@ -37,12 +37,12 @@ Suggestions/TODO:
 - L∞ constraint
 - Verify the weak formulation
 """
-function inversepoissonproblem2d(; n :: Int = 100)
+function inversepoissonproblem2d(; n::Int = 100)
 
   #Domain
-  domain = (-1,1,-1,1)
-  partition = (n,n)
-  model = CartesianDiscreteModel(domain,partition)
+  domain = (-1, 1, -1, 1)
+  partition = (n, n)
+  model = CartesianDiscreteModel(domain, partition)
 
   # Definition of the spaces:
   valuetype = Float64
@@ -72,7 +72,7 @@ function inversepoissonproblem2d(; n :: Int = 100)
   ω = π - 1 / 8
   h(x) = -sin(ω * x[1]) * sin(ω * x[2])
   function res(y, u, v)
-    ∫(-u * (∇(v)⋅∇(y)) - v * h) * dΩ
+    ∫(-u * (∇(v) ⋅ ∇(y)) - v * h) * dΩ
   end
   op = FEOperator(res, Y, Xpde)
   npde = Gridap.FESpaces.num_free_dofs(Ypde)
@@ -112,4 +112,5 @@ inversepoissonproblem2d_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_inversepoissonproblem2d_meta(n::Integer = default_nvar) = ((2 * n - 1)^2 + 4 * n^2, (2 * n - 1)^2)
+get_inversepoissonproblem2d_meta(n::Integer = default_nvar) =
+  ((2 * n - 1)^2 + 4 * n^2, (2 * n - 1)^2)

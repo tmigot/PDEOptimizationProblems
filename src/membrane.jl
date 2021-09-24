@@ -5,13 +5,13 @@
 function membrane(args...; n = 3, kwargs...)
   # n est la taille de la discrétisation (entier)
   domain = (0, 1, 0, 1)
-  model = CartesianDiscreteModel(domain, (n,n))
+  model = CartesianDiscreteModel(domain, (n, n))
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
 
   function f(y)
-    return ∫( (∇(y)⋅∇(y)) + y )dΩ
+    return ∫((∇(y) ⋅ ∇(y)) + y)dΩ
   end
 
   valuetype = Float64

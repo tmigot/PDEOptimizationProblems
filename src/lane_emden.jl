@@ -2,7 +2,6 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=10, 20, 40
 function lane_emden(args...; n = 10, kwargs...)
-
   domain = (-1, 1, -1, 1)
   model = CartesianDiscreteModel(domain, n)
 
@@ -11,17 +10,12 @@ function lane_emden(args...; n = 10, kwargs...)
   dΩ = Measure(trian, degree)
 
   function f(y)
-    ∫( 0.5 * (∇(y) ⊙ ∇(y)) - 0.25 * y * y * y * y) * dΩ
+    ∫(0.5 * (∇(y) ⊙ ∇(y)) - 0.25 * y * y * y * y) * dΩ
   end
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V0 = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    dirichlet_tags = "boundary",
-  )
+  V0 = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "boundary")
   U0 = TrialFESpace(V0, 0.0)
 
   return GridapPDENLPModel(

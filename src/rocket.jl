@@ -2,7 +2,6 @@
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=400, 800, 1600
 function rocket(args...; n = 400, kwargs...)
-
   model = CartesianDiscreteModel((0, 1), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition
@@ -21,10 +20,16 @@ function rocket(args...; n = 400, kwargs...)
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
   V0 = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
-  V1 = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0", "diri1"])
+  V1 = TestFESpace(
+    model,
+    reffe;
+    conformity = :H1,
+    labels = labels,
+    dirichlet_tags = ["diri0", "diri1"],
+  )
   Yh = TrialFESpace(V0, h₀)
   Yv = TrialFESpace(V0, 0.0)
-  Ym = TrialFESpace(V1, [m₀, mᵪ * m₀ ])
+  Ym = TrialFESpace(V1, [m₀, mᵪ * m₀])
   VS = TestFESpace(model, reffe; conformity = :L2)
   U = TrialFESpace(VS)
   Xpde = MultiFieldFESpace([V0, V0, V1])
@@ -40,22 +45,18 @@ function rocket(args...; n = 400, kwargs...)
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = conv ∘ (v, ∇(u))
 
-  D(h, v) = Dᵪ * v * v * (exp ∘ (-hᵪ * (h - h₀)/h₀))
-  g(h) = g₀ * (h₀/h) * (h₀/h)
+  D(h, v) = Dᵪ * v * v * (exp ∘ (-hᵪ * (h - h₀) / h₀))
+  g(h) = g₀ * (h₀ / h) * (h₀ / h)
   function res(y, u, w)
     h, v, m = y
     ph, pv, pm = w
-    return ∫( 
-      (c(h, ph) - v) +
-      (c(v, pv) * m - (u - D(h, v)) + g(h) * m) +
-      (c(m, pm) + u / cc)
-    )dΩ
+    return ∫((c(h, ph) - v) + (c(v, pv) * m - (u - D(h, v)) + g(h) * m) + (c(m, pm) + u / cc))dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
 
   function f(y, u)
     h, v, m = y
-    return ∫( -h )dΩ # we should maximize the altitude at final time
+    return ∫(-h)dΩ # we should maximize the altitude at final time
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
@@ -69,7 +70,7 @@ function rocket(args...; n = 400, kwargs...)
     ones(Gridap.FESpaces.num_free_dofs(Yh)),
     get_free_values(Gridap.FESpaces.interpolate(cell_v, Yv)),
     get_free_values(Gridap.FESpaces.interpolate(cell_m, Ym)),
-    Tmax/2 * ones(ndofs_con),
+    Tmax / 2 * ones(ndofs_con),
   )
   return GridapPDENLPModel(
     xin,

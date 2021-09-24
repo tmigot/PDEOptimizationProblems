@@ -12,10 +12,16 @@ function robot(args...; n = 400, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  VI = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0", "diri1"])
+  VI = TestFESpace(
+    model,
+    reffe;
+    conformity = :H1,
+    labels = labels,
+    dirichlet_tags = ["diri0", "diri1"],
+  )
   Yρ = TrialFESpace(VI, [4.5; 4.5])
-  Yθ = TrialFESpace(VI, [0.0; 2pi/3])
-  Yφ = TrialFESpace(VI, [pi/4; pi/4])
+  Yθ = TrialFESpace(VI, [0.0; 2pi / 3])
+  Yφ = TrialFESpace(VI, [pi / 4; pi / 4])
   VS = TestFESpace(model, reffe; conformity = :H1)
   Uρθφ = TrialFESpace(VS)
   Xpde = MultiFieldFESpace([VI, VI, VI])
@@ -38,20 +44,20 @@ function robot(args...; n = 400, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  Γ = BoundaryTriangulation(model, tags=["diri0", "diri1"])
+  Γ = BoundaryTriangulation(model, tags = ["diri0", "diri1"])
   dΓ = Measure(Γ, degree)
 
-  Iφ(ρ) = ((L - ρ)*(L - ρ)*(L - ρ) + ρ*ρ*ρ) / 3
-  Iθ(ρ, φ) = Iφ(ρ) * (sin ∘ φ)*(sin ∘ φ)
+  Iφ(ρ) = ((L - ρ) * (L - ρ) * (L - ρ) + ρ * ρ * ρ) / 3
+  Iθ(ρ, φ) = Iφ(ρ) * (sin ∘ φ) * (sin ∘ φ)
   function res(y, u, v)
     ρ, θ, φ = y
     uρ, uθ, uφ = u
     p, q, r = v
-    return ∫( 
-      (L * (∇(p)⋅∇(ρ)) - uρ * p) +
-      (Iθ(ρ, φ) * (∇(q)⋅∇(θ)) - uθ * p) +
-      (Iφ(ρ) * (∇(r)⋅∇(φ)) - uφ * p)
-    )dΩ + ∫( p * 0 + q * 0 + r * 0 )*dΓ
+    return ∫(
+      (L * (∇(p) ⋅ ∇(ρ)) - uρ * p) +
+      (Iθ(ρ, φ) * (∇(q) ⋅ ∇(θ)) - uθ * p) +
+      (Iφ(ρ) * (∇(r) ⋅ ∇(φ)) - uφ * p),
+    )dΩ + ∫(p * 0 + q * 0 + r * 0) * dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
 
@@ -62,7 +68,7 @@ function robot(args...; n = 400, kwargs...)
   cell_xs = get_cell_coordinates(trian)
   midpoint(xs) = sum(xs) / length(xs)
   cell_xm = lazy_map(midpoint, cell_xs)
-  cell_l = lazy_map(x -> 2pi/3 * (x/T) ⋅ (x/T), cell_xm)
+  cell_l = lazy_map(x -> 2pi / 3 * (x / T) ⋅ (x / T), cell_xm)
   xin = vcat(
     4.5 * ones(Gridap.FESpaces.num_free_dofs(Yρ)),
     get_free_values(Gridap.FESpaces.interpolate(cell_l, Yθ)),
