@@ -27,20 +27,26 @@ function glider(args...; n = 100, kwargs...)
     labels = labels,
     dirichlet_tags = ["diri0", "diri1"],
   )
+  Vfree = TestFESpace(model, reffe; conformity = :H1, labels = labels)
   Yx = TrialFESpace(V0, 0.0)
   Yxp = TrialFESpace(V1, [13.23, 13.23])
   Yy = TrialFESpace(V1, [1000.0, 900.0])
+  YY = TrialFESpace(Vfree)
   Yyp = TrialFESpace(V1, [-1.288, -1.288])
   VS = TestFESpace(model, reffe; conformity = :L2)
   U = TrialFESpace(VS)
-  Xpde = MultiFieldFESpace([V0, V1, V1, V1])
-  Ypde = MultiFieldFESpace([Yx, Yxp, Yy, Yyp])
+  Xpde = MultiFieldFESpace([V0, V1, V1, Vfree, V1])
+  Ypde = MultiFieldFESpace([Yx, Yxp, Yy, YY, Yyp])
   Xcon = VS # MultiFieldFESpace([VS])
   Ycon = U # MultiFieldFESpace([U])
 
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
+
+  degree = 1
+  Γ = BoundaryTriangulation(model, tags=["diri1"])
+  dΓ = Measure(Γ, degree)
 
   # for the weak formulation of dy/dt
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
@@ -53,20 +59,20 @@ function glider(args...; n = 100, kwargs...)
   D(x, xp, yp, cL) = 0.5 * ρ * S * (c₀ + c₁ * cL * cL) * vf(x, xp, yp)
   L(x, xp, yp, cL) = 0.5 * ρ * S * cL * vf(x, xp, yp)
   function res(xy, cL, v)
-    x, xp, y, yp = xy
-    px, pxp, py, pyp = v
+    x, xp, y, Y, yp = xy
+    px, pxp, py, pY, pyp = v
     return ∫(
       (c(x, px) - xp * px) +
       (c(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp)) +
       (c(y, py) - py * yp) +
-      (c(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))),
-    )dΩ
+      (c(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))) +
+      c(Y, pY) )dΩ  + ∫( (Y - y) * pY )dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
 
-  function f(y, u)
-    h, v, m = y
-    return ∫(-h)dΩ # we should maximize the altitude at final time
+  function f(xy, u)
+    x, xp, y, Y, yp = xy
+    return ∫( -Y )dΩ # maximize final horizontal position of a hang glider
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
@@ -80,6 +86,7 @@ function glider(args...; n = 100, kwargs...)
     get_free_values(Gridap.FESpaces.interpolate(cell_x, Yx)),
     13.23 * ones(Gridap.FESpaces.num_free_dofs(Yxp)),
     get_free_values(Gridap.FESpaces.interpolate(cell_y, Yy)),
+    get_free_values(Gridap.FESpaces.interpolate(cell_y, YY)),
     -1.288 * ones(Gridap.FESpaces.num_free_dofs(Yyp)),
     cmax / 2 * ones(ndofs_con),
   )
@@ -98,6 +105,7 @@ function glider(args...; n = 100, kwargs...)
       zeros(Gridap.FESpaces.num_free_dofs(Yx)),
       zeros(Gridap.FESpaces.num_free_dofs(Yxp)),
       -Inf * ones(Gridap.FESpaces.num_free_dofs(Yy)),
+      -Inf * ones(Gridap.FESpaces.num_free_dofs(YY)),
       -Inf * ones(Gridap.FESpaces.num_free_dofs(Yyp)),
     ),
     name = "Hang Glider",
@@ -109,7 +117,7 @@ glider_meta = Dict(
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
-  :ny => 4,
+  :ny => 5,
   :nu => 1,
   :optimal_value => NaN,
   :is_infeasible => false,
@@ -125,4 +133,4 @@ glider_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_glider_meta(n::Integer = default_nvar) = (3 * (n - 1) + 3 * n, 3 * (n - 1) + n)
+get_glider_meta(n::Integer = default_nvar) = (3 * (n - 1) + 4 * n + 1, 3 * (n - 1) + 2 * n + 1)
