@@ -1,11 +1,14 @@
-function _poissonwithNeumannandDirichlet(args...; kwargs...)
+function poisson_with_Neumann_and_Dirichlet(args...; n::Int = 10, kwargs...)
   #model = DiscreteModelFromFile("https://github.com/gridap/Tutorials/tree/master/models/model.json")
-  model = DiscreteModelFromFile("models/model.json")
+  # model = DiscreteModelFromFile("models/model.json")
   #writevtk(model,"model")
+  domain = (0, 1, 0, 1)
+  partition = (n, n)
+  model = CartesianDiscreteModel(domain, partition)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  Xpde = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "sides")
+  Xpde = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "tag_5")
 
   g(x) = 2.0
   Ypde = TrialFESpace(Xpde, g)
@@ -19,8 +22,8 @@ function _poissonwithNeumannandDirichlet(args...; kwargs...)
   degree = 2
   dΩ = Measure(trian, degree)
 
-  neumanntags = ["circle", "triangle", "square"]
-  btrian = BoundaryTriangulation(model, neumanntags)
+  neumanntags = ["tag_6", "tag_7", "tag_8"]
+  btrian = BoundaryTriangulation(model, tags = neumanntags)
   dΩᵦ = Measure(btrian, degree)
 
   ybis(x) = x[1]^2 + x[2]^2
@@ -28,28 +31,13 @@ function _poissonwithNeumannandDirichlet(args...; kwargs...)
     ∫(0.5 * (ybis - y) * (ybis - y) + 0.5 * u * u) * dΩ
   end
 
-  #=
-  function res_Ω(yu, v)
-    y, u = yu
-    ∇(v)⊙∇(y) - v*u
-  end
-  topt_Ω = FETerm(res_Ω, trian, quad)
-  function res_Γ(yu, v)
-    y, u = yu
-    -v*h
-  end
-  function res_Γs(v)
-    v*h #careful to the sign
-  end
-  #If we use a FETerm here, there is an issue with get_nnz.
-  topt_Γ = FESource(res_Γs, btrian, bquad) #FETerm(res_Γ, btrian, bquad)#FESource(res_Γs, btrian, bquad)
-  =#
+  h(x) = 3.0
   function res(y, u, v)
     ∫(∇(v) ⊙ ∇(y) - v * u) * dΩ + ∫(-v * h) * dΩᵦ
   end
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  op = FEOperator(res, Ypde, Xpde, topt_Ω, topt_Γ)
+  op = FEOperator(res, Ypde, Xpde)
 
   return GridapPDENLPModel(
     xin,
@@ -64,8 +52,8 @@ function _poissonwithNeumannandDirichlet(args...; kwargs...)
   )
 end
 
-_poissonwithNeumannandDirichlet_meta = Dict(
-  :name => "_poissonwithNeumannandDirichlet",
+poisson_with_Neumann_and_Dirichlet_meta = Dict(
+  :name => "poisson_with_Neumann_and_Dirichlet",
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
@@ -73,16 +61,16 @@ _poissonwithNeumannandDirichlet_meta = Dict(
   :nu => 1,
   :optimal_value => NaN,
   :is_infeasible => false,
-  :objtype => :sum_of_squares,
-  :contype => :unconstrained,
+  :objtype => :quadratic,
+  :contype => :general,
   :origin => :unknown,
   :deriv => typemax(UInt8),
   :has_cvx_obj => false,
   :has_cvx_con => false,
-  :has_equalities_only => false,
+  :has_equalities_only => true,
   :has_inequalities_only => false,
   :has_bounds => false,
-  :has_fixed_variables => false,
+  :has_fixed_variables => true,
 )
 
-get__poissonwithNeumannandDirichlet_meta(n::Integer = default_nvar) = (n, 0)
+get_poisson_with_Neumann_and_Dirichlet_meta(n::Integer = default_nvar) = (n * (n + 1) + 2 + (n + 1)^2, n * (n + 1) + 2)

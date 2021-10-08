@@ -49,7 +49,7 @@ const problems = [
   "glider",
   "minsurf",
   "poisson3d",
-  # "poisson_with_Neumann_and_Dirichlet",
+  "poisson_with_Neumann_and_Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
   #ODE-constraint
   "cellincrease",
