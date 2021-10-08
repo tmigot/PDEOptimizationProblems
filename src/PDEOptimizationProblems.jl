@@ -45,9 +45,11 @@ const problems = [
   "poissonboltzman2d",
   "smallestlaplacianeigenvalue",
   "catmix",
+  "rocket",
+  "glider",
   "minsurf",
-  # "poisson3d",
-  # "poisson-with-Neumann-and-Dirichlet",
+  "poisson3d",
+  # "poisson_with_Neumann_and_Dirichlet",
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
   #ODE-constraint
   "cellincrease",
@@ -62,8 +64,6 @@ const problems = [
   "methanol", # discrete objective function, now I use interpolation
   # "robot", # minimize final time + final time constraints
   "steering", # minimize final time + final time constraints # issue with: https://github.com/gridap/Gridap.jl/issues/659
-  "rocket", # maximize final time value of unknown function
-  "glider", # maximize final time value of unknown function
   "membrane", # not the correct boundary condition
 ]
 
