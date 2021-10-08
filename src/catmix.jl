@@ -11,36 +11,46 @@ function catmix(args...; n::Int = 100, kwargs...)
   #Definition of the spaces:
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1])
+  add_tag_from_tags!(labels, "diri1", [2])
 
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
 
+  degree = 1
+  Γ = BoundaryTriangulation(model, tags=["diri1"])
+  dΓ = Measure(Γ, degree)
+
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
   V = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
+  Vfree = TestFESpace(model, reffe; conformity = :H1)
   Y1 = TrialFESpace(V, 1.0)
+  Yfree = TrialFESpace(Vfree)
   Y2 = TrialFESpace(V, 0.0)
-  Ypde = MultiFieldFESpace([Y1, Y2])
-  Xpde = MultiFieldFESpace([V, V])
+  Ypde = MultiFieldFESpace([Y1, Yfree, Y2, Yfree])
+  Xpde = MultiFieldFESpace([V, Vfree, V, Vfree])
   Xcon = TestFESpace(model, reffe; conformity = :L2)
   Ycon = TrialFESpace(Xcon)
 
   #objective function:
   function f(y, u)
-    y1, y2 = y
-    ∫(y1 + y2)dΩ # should be just the final time
+    y1, Y1, y2, Y2 = y
+    ∫(Y1 + Y2)dΩ
   end
 
   #Definition of the constraint operator
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = v ⊙ (conv ∘ (u, ∇(u)))
   function res(y, u, v)
-    y1, y2 = y
-    v1, v2 = v
+    y1, Y1, y2, Y2 = y
+    v1, V1, v2, V2 = v
     return ∫(
-      c(y1, v1) - v1 * u * (10 * y2 - y1) + c(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u),
-    )dΩ
+      c(y1, v1) - v1 * u * (10 * y2 - y1) + 
+      c(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u) +
+      c(Y1, V1) + 
+      c(Y2, V2) )dΩ + 
+      ∫( (Y1 - y1) * V1 )dΓ  + ∫( (Y2 - y2) * V2 )dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
 
@@ -48,7 +58,9 @@ function catmix(args...; n::Int = 100, kwargs...)
   # u = 0, y1 = 1, y2 = 0
   x0 = vcat(
     zeros(Gridap.FESpaces.num_free_dofs(Y1)),
+    zeros(Gridap.FESpaces.num_free_dofs(Yfree)),
     zeros(Gridap.FESpaces.num_free_dofs(Y2)),
+    zeros(Gridap.FESpaces.num_free_dofs(Yfree)),
     zeros(Gridap.FESpaces.num_free_dofs(Ycon)),
   )
   return GridapPDENLPModel(
@@ -71,7 +83,7 @@ catmix_meta = Dict(
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
-  :ny => 2,
+  :ny => 4,
   :nu => 1,
   :optimal_value => NaN,
   :is_infeasible => false,
@@ -87,4 +99,4 @@ catmix_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_catmix_meta(n::Integer = default_nvar) = (4 * n, 2 * n)
+get_catmix_meta(n::Integer = default_nvar) = (6 * n + 2, 4 * n + 2)
