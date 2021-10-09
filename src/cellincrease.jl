@@ -1,3 +1,5 @@
+export cellincrease
+
 """
 Mairet, F., & Bayen, T. (2021). The promise of dawn: microalgae photoacclimation as an optimal control problem of resource allocation. Journal of Theoretical Biology, 515, 110597.
 

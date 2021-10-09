@@ -1,10 +1,10 @@
 # PDEOptimizationProblems
 
-A list of optimization problems with ODE/PDE in the constraints model and discretized using [Gridap.jl]() and [PDENLPModels.jl]().
+A list of optimization problems with ODE/PDE in the constraints model and discretized using [Gridap.jl](https://github.com/gridap/Gridap.jl) and [PDENLPModels.jl](https://github.com/JuliaSmoothOptimizers/PDENLPModels.jl).
 
 The list of problems can be accessed as a string
 ```
-PDEOptimizationsProblems.problems
+PDEOptimizationsProblems.problems # or setdiff(names(PDEOptimizationProblems), [:PDEOptimizationProblems])
 ```
 and each problem can be accessed as follows
 ```

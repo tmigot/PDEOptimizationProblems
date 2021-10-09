@@ -1,3 +1,5 @@
+export controlsir
+
 function controlsir(args...; x0 = [1, 2], n = 10, a = 0.2, b = 0.1, μ = 0.1, T = 1, kwargs...)
   model = CartesianDiscreteModel((0, T), n)
 

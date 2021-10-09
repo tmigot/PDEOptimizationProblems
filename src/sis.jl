@@ -1,3 +1,5 @@
+export sis
+
 function sis(args...; x0 = [1, 2], n = 10, a = 0.2, b = 0.7, T = 1, kwargs...)
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)

@@ -1,4 +1,4 @@
-export penalizedPoisson
+export penalizedpoisson
 
 """
 Let Ω=(0,1)^2, we solve the unconstrained optimization problem:

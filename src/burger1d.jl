@@ -1,4 +1,4 @@
-export Burger1d
+export burger1d
 
 """
 `Burger1d(;n :: Int = 512, kwargs...)`

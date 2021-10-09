@@ -1,3 +1,5 @@
+export lane_emden
+
 # Transition States for the Lane-Emden Problem COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=10, 20, 40

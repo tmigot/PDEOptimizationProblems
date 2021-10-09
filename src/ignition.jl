@@ -1,3 +1,5 @@
+export ignition
+
 # https://arxiv.org/pdf/2103.14552.pdf
 # Example 2. IGNITION
 # Multilevel Active-Set Trust-Region (MASTR) Method for Bound Constrained Minimization

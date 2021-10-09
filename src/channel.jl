@@ -1,3 +1,5 @@
+export channel
+
 # Isometrization of Flow in a Channel COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 function channel(args...; n = 400, kwargs...)

@@ -1,3 +1,5 @@
+export torebrachistochrone
+
 function torebrachistochrone(args...; n = 3, kwargs...)
   # n est la taille de la discrétisation (entier)
   # le domain au format (t₀, T)

@@ -1,4 +1,4 @@
-export incompressibleNavierStokes
+export incompressiblenavierstokes
 
 """
 

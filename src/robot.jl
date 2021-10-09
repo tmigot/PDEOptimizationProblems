@@ -1,3 +1,5 @@
+export robot
+
 # Isometrization of Robot Arm COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=200, 400, 800

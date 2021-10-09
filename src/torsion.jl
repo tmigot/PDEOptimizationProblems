@@ -1,3 +1,5 @@
+export torsion
+
 # Elastic-Plastic Torsion COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 function torsion(args...; n = 3, kwargs...)

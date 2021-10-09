@@ -1,3 +1,5 @@
+export burger1d_param
+
 function burger1d_param(args...; n = 512, kwargs...)
   domain = (0, 1)
   partition = n

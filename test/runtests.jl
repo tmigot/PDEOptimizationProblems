@@ -5,8 +5,7 @@ using PDEOptimizationProblems
 include("utils.jl")
 
 # Test that every problem can be instantiated.
-for pb in PDEOptimizationProblems.problems
-  prob = Meta.parse(pb)
+for prob in setdiff(names(PDEOptimizationProblems), [:PDEOptimizationProblems])
   print(prob)
   prob_fn = PDEOptimizationProblems.eval(prob)
   nlp = prob_fn(n = 10)
@@ -15,5 +14,5 @@ for pb in PDEOptimizationProblems.problems
   nlp.meta.ncon != 0 && cons(nlp, nlp.meta.x0)
   hess(nlp, nlp.meta.x0, nlp.meta.y0)
   # test meta information
-  meta_sanity(pb)
+  meta_sanity(prob)
 end

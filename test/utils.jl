@@ -6,7 +6,7 @@ function meta_sanity(name)
   nlp = eval(Meta.parse("PDEOptimizationProblems.$(name)(n = $ndef)"))
 
   @show nlp.meta.name, meta[:name]
-  if !(name in ["incompressiblenavierstokes"])
+  if !(name in [:incompressiblenavierstokes])
     @test nlp.meta.nvar == n
     @test nlp.meta.ncon == m
   end
