@@ -1,4 +1,4 @@
-export poissonBoltzman2d
+export poissonboltzman2d
 
 """
 

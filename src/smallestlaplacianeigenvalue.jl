@@ -1,4 +1,4 @@
-export smallestLaplacianeigenvalue
+export smallestlaplacianeigenvalue
 
 """
 `smallestLaplacianeigenvalue(; n :: Int = 10, args...)`

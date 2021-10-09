@@ -1,3 +1,5 @@
+export poissonmixed
+
 ###############################################################################
 #
 # This test case consider the optimization of a parameter in a Poisson equation

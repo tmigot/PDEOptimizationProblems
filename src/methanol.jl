@@ -1,3 +1,5 @@
+export methanol
+
 # Methanol to Hydrocarbons COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400

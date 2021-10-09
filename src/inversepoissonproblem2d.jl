@@ -4,7 +4,7 @@
 # min_{u,z}   0.5 ∫_Ω​ |u(x) - ud(x)|^2dx + 0.5 * α * ∫_Ω​ |z|^2
 # s.t.        -∇⋅(z∇u) = h ,   for    x ∈  Ω
 #             u(x) = 0,        for    x ∈ ∂Ω
-export inversePoissonproblem2d
+export inversepoissonproblem2d
 
 """
 
