@@ -62,7 +62,7 @@ const problems = [
   # marine, # discrete objective function (now not implemented)
   "gasoil", # discrete objective function, now I use interpolation
   "methanol", # discrete objective function, now I use interpolation
-  # "robot", # minimize final time + final time constraints
+  "robot", # minimize final time + final time constraints
   "steering", # minimize final time + final time constraints # issue with: https://github.com/gridap/Gridap.jl/issues/659
   "membrane", # not the correct boundary condition
 ]
