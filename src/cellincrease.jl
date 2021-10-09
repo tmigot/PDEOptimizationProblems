@@ -1,3 +1,8 @@
+"""
+Mairet, F., & Bayen, T. (2021). The promise of dawn: microalgae photoacclimation as an optimal control problem of resource allocation. Journal of Theoretical Biology, 515, 110597.
+
+Using a photosynthetic rate proportional to the photosynthetic apparatus mass fraction.
+"""
 function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
   kp(x) = 1.01
   kr(x) = 2.03
@@ -11,8 +16,8 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
 
   Vcon = TestFESpace(model, reffe, conformity = :L2)
   Ucon = TrialFESpace(Vcon)
-  Xcon = MultiFieldFESpace([Vcon, Vcon])
-  Ycon = MultiFieldFESpace([Ucon, Ucon])
+  Xcon = Vcon
+  Ycon = Ucon
 
   function f(y, u)
     cf, pf = y
@@ -36,16 +41,15 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
   function res(y, u, v)
     cf, pf = y
     p, q = v
-    uf, ufo = u # how to extract a SingleField from a MultiField of size 1?
     ∫(
       -p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) +
       c(cf, p) +
       c(pf, q) +
-      q * (kr * cf * (1.0 - cf - pf) * uf - kp * pf * pf),
+      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf)
     )dΩ
   end
 
-  Y = MultiFieldFESpace([UI, US, Ucon, Ucon])
+  Y = MultiFieldFESpace([UI, US, Ucon])
   op_sir = FEOperator(res, Ypde, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
@@ -58,7 +62,7 @@ cellincrease_meta = Dict(
   :pbtype => :yu,
   :nθ => 0,
   :ny => 2,
-  :nu => 2,
+  :nu => 1,
   :optimal_value => NaN,
   :is_infeasible => false,
   :objtype => :sum_of_squares,
@@ -73,4 +77,4 @@ cellincrease_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_cellincrease_meta(n::Integer = default_nvar) = (6 * n, 2 * n)
+get_cellincrease_meta(n::Integer = default_nvar) = (4 * n, 2 * n)
