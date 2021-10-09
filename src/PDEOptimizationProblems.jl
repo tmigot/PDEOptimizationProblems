@@ -53,6 +53,7 @@ const problems = [
   "inversepoissonproblem2d", #to be completed (in particular target function + check other things)
   #ODE-constraint
   "cellincrease",
+  "cellincrease_MichaelisMenten",
   "controlsir",
   "dynamicsir",
   "sis",
