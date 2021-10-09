@@ -56,8 +56,8 @@ function robot(args...; n = 400, kwargs...)
     return ∫(
       (L * (∇(p) ⋅ ∇(ρ)) - uρ * p) +
       (Iθ(ρ, φ) * (∇(q) ⋅ ∇(θ)) - uθ * p) +
-      (Iφ(ρ) * (∇(r) ⋅ ∇(φ)) - uφ * p),
-    )dΩ + ∫(p * 0 + q * 0 + r * 0) * dΓ
+      (Iφ(ρ) * (∇(r) ⋅ ∇(φ)) - uφ * p)
+    )dΩ # + ∫(p * 0 + q * 0 + r * 0) * dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
 
@@ -100,16 +100,16 @@ robot_meta = Dict(
   :nu => 3,
   :optimal_value => NaN,
   :is_infeasible => false,
-  :objtype => :sum_of_squares,
-  :contype => :unconstrained,
+  :objtype => :linear,
+  :contype => :general,
   :origin => :unknown,
   :deriv => typemax(UInt8),
   :has_cvx_obj => false,
   :has_cvx_con => false,
-  :has_equalities_only => false,
+  :has_equalities_only => true,
   :has_inequalities_only => false,
-  :has_bounds => false,
-  :has_fixed_variables => false,
+  :has_bounds => true,
+  :has_fixed_variables => true,
 )
 
 get_robot_meta(n::Integer = default_nvar) = (2 * 3 * n, 3 * (n - 1))

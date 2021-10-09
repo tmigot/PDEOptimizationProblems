@@ -27,15 +27,6 @@ z ≥ 0 (implicit)
 This example has been used in [Section 9.2](Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
 Implementing a smooth exact penalty function for equality-constrained nonlinear optimization.
 SIAM Journal on Scientific Computing, 42(3), A1809-A1835.)
-
-The specificity of the problem:
-- quadratic objective function;
-- nonlinear constraints with AD jacobian;
-
-Suggestions/TODO:
-- compute target function u_d.
-- L∞ constraint
-- Verify the weak formulation
 """
 function inversepoissonproblem2d(; n::Int = 100)
 
@@ -62,10 +53,15 @@ function inversepoissonproblem2d(; n::Int = 100)
   dΩ = Measure(trian, degree)
 
   #Objective function:
+  c = [0.2 0.2]
+  S1(x) = (x[1]^2 - 0.2)^2 + (x[2]^2 - 0.2)^2 <= 0.3^2 ? 1.0 : 0.0
+  S2(x) = abs(x[1] - 0.2) + abs(x[2] - 0.2) <= 0.6 ? 1.0 : 0.0
+  zs(x) = 1.0 + 0.5 * S1(x) + 0.5 * S2(x)
   yd(x) = -x[1]^2
   α = 1e-4
   function f(y, u)
-    ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
+    # ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
+    return ∫(0.5 * (zs - u) * (zs - u) ) * dΩ
   end
 
   #Definition of the constraint operator
@@ -87,6 +83,7 @@ function inversepoissonproblem2d(; n::Int = 100)
     Xpde,
     Xcon,
     op,
+    lvaru = zeros(ncon),
     name = "inversePoissonproblem2d",
   )
 end
@@ -108,7 +105,7 @@ inversepoissonproblem2d_meta = Dict(
   :has_cvx_con => false,
   :has_equalities_only => true,
   :has_inequalities_only => false,
-  :has_bounds => false,
+  :has_bounds => true,
   :has_fixed_variables => true,
 )
 
