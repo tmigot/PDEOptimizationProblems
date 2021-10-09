@@ -1,7 +1,12 @@
-# https://arxiv.org/pdf/2103.14552.pdf
-# Example 1. MEMBRANE
-# Multilevel Active-Set Trust-Region (MASTR) Method for Bound Constrained Minimization
-# Alena Kopaničáková and Rolf Krause
+"""
+https://arxiv.org/pdf/2103.14552.pdf
+Example 1. MEMBRANE
+Multilevel Active-Set Trust-Region (MASTR) Method for Bound Constrained Minimization
+Alena Kopaničáková and Rolf Krause
+
+The solution and original problem is given in
+Domorádová, M., & Dostál, Z. (2007). Projector preconditioning for partially bound‐constrained quadratic optimization. Numerical Linear Algebra with Applications, 14(10), 791-806.
+"""
 function membrane(args...; n = 3, kwargs...)
   # n est la taille de la discrétisation (entier)
   domain = (0, 1, 0, 1)
@@ -20,7 +25,7 @@ function membrane(args...; n = 3, kwargs...)
     model,
     reffe;
     conformity = :H1,
-    dirichlet_tags = "boundary", # should be over Γₗ only.
+    dirichlet_tags = "tag_7",
   )
   U0 = TrialFESpace(V0, 0.0)
   nU0 = Gridap.FESpaces.num_free_dofs(U0)
@@ -71,4 +76,4 @@ membrane_meta = Dict(
   :has_fixed_variables => false,
 )
 
-get_membrane_meta(n::Integer = default_nvar) = ((n - 1)^2, 0)
+get_membrane_meta(n::Integer = default_nvar) = (n * (n + 1) + 2, 0)
