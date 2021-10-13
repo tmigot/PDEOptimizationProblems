@@ -48,27 +48,8 @@ function apinene(args...; n = 400, kwargs...)
     4.5 63.1 3.8 2.9 25.7
   ]
 
-  δ = Array{Function}(undef, 8)
-  for i = 1:8
-    δ[i] = t -> (t == τ[i] ? 1.0 : 0.0)
-  end
-  function f(k, y)
-    y1, y2, y3, y4, y5 = y
-    int = Array{Any}(undef, 8)
-    for j = 1:8
-      int[j] =
-        ∫(
-          δ[j](
-            dot(y1 - zmes[j, 1], y1 - zmes[j, 1]) +
-            dot(y2 - zmes[j, 2], y2 - zmes[j, 2]) +
-            dot(y3 - zmes[j, 3], y3 - zmes[j, 3]) +
-            dot(y4 - zmes[j, 4], y4 - zmes[j, 4]) +
-            dot(y5 - zmes[j, 5], y5 - zmes[j, 5]),
-          ),
-        )dΩ
-    end
-    return sum(int)
-  end
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(5, 8, zmes, 1, τ, dΩ)
+  f = (θ, y) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs + 5)
