@@ -19,13 +19,14 @@ using DataFrames
 using Gridap
 using PDENLPModels
 
-struct InterpolatedEnergyFETerm
+struct InterpolatedEnergyFETerm{M}
   ny::Int # number of fields
   nymes::Int # number of measurement (assuming same for each field)
   Ymes # y measurement: nmes x ny
   ndim::Int # dimension of the domain (1D, 2D, 3D...)
   Xmes # times of measurements (nmes x ndim) or nmes length vector
-  dΩ # measure for the integration
+  dΩ::M # measure for the integration
+  δ::Array{Function} # array of functions of size nmes
 
   function InterpolatedEnergyFETerm(ny, nymes, Ymes, ndim, Xmes, dΩ)
     if size(Ymes) != (nymes, ny)
@@ -38,18 +39,27 @@ struct InterpolatedEnergyFETerm
     elseif size(Xmes) != (ndim, nymes)
       throw(error("Dimension error size(Xmes) != (nymes, ndim) ($(size(Xmes)), $((nymes, ndim)))"))
     end
-    return new(ny, nymes, Ymes, ndim, Xmes, dΩ)
+    δ = Array{Function}(undef, nymes)
+    for j = 1:nymes
+      δ[j] = t -> (t == Xmes[j,:] ? 1.0 : 0.0)
+    end
+    return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ)
   end
 end
 
 function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
-  δ = Array{Function}(undef, IT.nymes)
-  for j = 1:IT.nymes
-    δ[j] = t -> (t == IT.Xmes[j,:] ? 1.0 : 0.0)
+  nymes, ny = IT.nymes, IT.ny
+  Ymes, dΩ, δ = IT.Ymes, IT.dΩ, IT.δ
+  j = 1
+  if ny > 1
+    return sum(
+      [sum([∫(δ[j] ⋅ (dot(y[i] - Ymes[j, i], y[i] - Ymes[j, i])))dΩ for i=1:ny]) for j=1:nymes]
+    )
+  else # ny = 1
+    return sum(
+      [∫(δ[j] ⋅ (dot(y - Ymes[j, 1], y - Ymes[j, 1])))dΩ for j=1:nymes]
+    )
   end
-  return sum(
-    [∫(δ[j] ⋅ (dot(y[i] - IT.Ymes[j, i], y[i] - IT.Ymes[j, i])))IT.dΩ for j=1:IT.nymes, i=1:IT.ny]
-  )
 end
 
 const problems = [
