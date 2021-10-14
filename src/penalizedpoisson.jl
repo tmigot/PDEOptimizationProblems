@@ -12,7 +12,7 @@ The minimizer of this problem is the solution of the Poisson equation:
 
 This example has been used in [Exercice 10.2.4 (p. 308)](G. Allaire, Analyse numérique et optimisation, Les éditions de Polytechnique)
 """
-function penalizedpoisson(args...; n = 2^4, kwargs...)
+function penalizedpoisson(n :: Int = 2^4, args...; kwargs...)
   domain = (0, 1, 0, 1)
   partition = (n, n)
   model = CartesianDiscreteModel(domain, partition)

@@ -2,7 +2,7 @@ export channel
 
 # Isometrization of Flow in a Channel COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
-function channel(args...; n = 400, kwargs...)
+function channel(n :: Int = 400, args...; kwargs...)
   model = CartesianDiscreteModel((0, 1), n)
 
   labels = get_face_labeling(model)

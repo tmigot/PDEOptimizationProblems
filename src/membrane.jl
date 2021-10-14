@@ -9,7 +9,7 @@ Alena Kopaničáková and Rolf Krause
 The solution and original problem is given in
 Domorádová, M., & Dostál, Z. (2007). Projector preconditioning for partially bound‐constrained quadratic optimization. Numerical Linear Algebra with Applications, 14(10), 791-806.
 """
-function membrane(args...; n = 3, kwargs...)
+function membrane(n :: Int = 3, args...; kwargs...)
   # n est la taille de la discrétisation (entier)
   domain = (0, 1, 0, 1)
   model = CartesianDiscreteModel(domain, (n, n))

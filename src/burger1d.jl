@@ -23,7 +23,7 @@ Suggestions:
 - FEOperatorFromTerms has only one term. We might consider splitting linear and
 nonlinear terms.
 """
-function burger1d(args...; n::Int = 512, kwargs...)
+function burger1d(n :: Int = 512, args...; kwargs...)
 
   #Domain
   domain = (0, 1)

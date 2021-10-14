@@ -10,7 +10,7 @@ https://gridap.github.io/Tutorials/stable/pages/t008_inc_navier_stokes/
 
 It has no objective function and no control, just the PDE.
 """
-function incompressiblenavierstokes(args...; n = 3, kwargs...)
+function incompressiblenavierstokes(n :: Int = 3, args...; kwargs...)
   domain = (0, 1, 0, 1)
   partition = (n, n)
   model = CartesianDiscreteModel(domain, partition)

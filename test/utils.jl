@@ -3,7 +3,7 @@ function meta_sanity(name)
   meta = eval(Meta.parse("PDEOptimizationProblems.$(name)_meta"))
   n, m = eval(Meta.parse("PDEOptimizationProblems.get_$(name)_meta($ndef)"))
 
-  nlp = eval(Meta.parse("PDEOptimizationProblems.$(name)(n = $ndef)"))
+  nlp = eval(Meta.parse("PDEOptimizationProblems.$(name)($ndef)"))
 
   @show nlp.meta.name, meta[:name]
   if !(name in [:incompressiblenavierstokes])

@@ -1,6 +1,6 @@
 export burger1d_param
 
-function burger1d_param(args...; n = 512, kwargs...)
+function burger1d_param(n :: Int = 512, args...; kwargs...)
   domain = (0, 1)
   partition = n
   model = CartesianDiscreteModel(domain, partition)

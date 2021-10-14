@@ -11,7 +11,7 @@ export poissonmixed2
 # * |k| = 2
 #
 ###############################################################################
-function poissonmixed2(args...; n = 3, kwargs...)
+function poissonmixed2(n :: Int = 3, args...; kwargs...)
   domain = (0, 1, 0, 1)
   partition = (n, n)
   model = CartesianDiscreteModel(domain, partition)

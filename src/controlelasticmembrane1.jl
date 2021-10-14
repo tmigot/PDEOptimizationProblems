@@ -16,7 +16,7 @@ The force term is h(x_1,x_2) = - sin( ω x_1)sin( ω x_2) with  ω = π - 1/8.
 In this first case, the bound constraints are constants with
 umin(x) = 0.0 and umax(x) = 1.0.
 """
-function controlelasticmembrane1(args...; n::Int = 10, kargs...)
+function controlelasticmembrane1(n :: Int = 10, args...; kargs...)
 
   #Domain
   domain = (-1, 1, -1, 1)

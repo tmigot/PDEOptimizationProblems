@@ -24,7 +24,7 @@ The specificity of the problem:
 - quadratic objective function;
 - nonlinear constraints with AD jacobian;
 """
-function poissonboltzman2d(; n::Int = 100)
+function poissonboltzman2d(n :: Int = 100, args...; kwargs...)
 
   #Domain
   domain = (-1, 1, -1, 1)

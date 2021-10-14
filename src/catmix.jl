@@ -3,7 +3,7 @@ export catmix
 # Catalyst Mixing COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
-function catmix(args...; n::Int = 100, kwargs...)
+function catmix(n :: Int = 100, args...; kwargs...)
 
   #Domain
   domain = (0, 1)

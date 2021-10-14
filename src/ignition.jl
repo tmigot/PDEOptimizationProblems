@@ -4,7 +4,7 @@ export ignition
 # Example 2. IGNITION
 # Multilevel Active-Set Trust-Region (MASTR) Method for Bound Constrained Minimization
 # Alena Kopaničáková and Rolf Krause
-function ignition(args...; n = 3, kwargs...)
+function ignition(n :: Int = 3, args...; kwargs...)
   # n est la taille de la discrétisation (entier)
   domain = (0, 1, 0, 1)
   model = CartesianDiscreteModel(domain, (n, n))

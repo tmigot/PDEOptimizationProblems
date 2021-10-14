@@ -3,7 +3,8 @@ export gasoil
 # Catalytic Cracking of Gas Oil COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
-function gasoil(args...; n = 100, kwargs...)
+function gasoil(n :: Int = 100, args...; kwargs...)
+
   model = CartesianDiscreteModel((0, 1), n)
 
   valuetype = Float64

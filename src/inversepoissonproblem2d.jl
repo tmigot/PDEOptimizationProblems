@@ -28,7 +28,7 @@ This example has been used in [Section 9.2](Estrin, R., Friedlander, M. P., Orba
 Implementing a smooth exact penalty function for equality-constrained nonlinear optimization.
 SIAM Journal on Scientific Computing, 42(3), A1809-A1835.)
 """
-function inversepoissonproblem2d(; n::Int = 100)
+function inversepoissonproblem2d(n :: Int = 100, args...; kargs...)
 
   #Domain
   domain = (-1, 1, -1, 1)

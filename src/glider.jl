@@ -3,7 +3,8 @@ export glider
 # Hang Glider COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
-function glider(args...; n = 100, kwargs...)
+function glider(n :: Int = 100, args...; kwargs...)
+
   model = CartesianDiscreteModel((0, 1), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition

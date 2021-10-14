@@ -15,7 +15,7 @@ The force term is h(x_1,x_2) = - sin( ω x_1)sin( ω x_2) with  ω = π - 1/8.
 In this second case, the bound constraints are
 umin(x) = x_1+x_2 and umax(x) = x_1^2+x_2^2 applied at the midpoint of the cells.
 """
-function controlelasticmembrane2(; n::Int = 10, args...)
+function controlelasticmembrane2(n :: Int = 10, args...; kargs...)
 
   # Domain
   domain = (-1, 1, -1, 1)

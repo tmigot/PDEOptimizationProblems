@@ -3,7 +3,8 @@ export lane_emden
 # Transition States for the Lane-Emden Problem COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=10, 20, 40
-function lane_emden(args...; n = 10, kwargs...)
+function lane_emden(n :: Int = 10, args...; kwargs...)
+
   domain = (-1, 1, -1, 1)
   model = CartesianDiscreteModel(domain, n)
 
