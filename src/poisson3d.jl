@@ -10,11 +10,7 @@ So, the minimal value is expected to be 0.
 It is inspired from the 2nd tutorial in Gridap.jl:
 https://gridap.github.io/Tutorials/stable/pages/t002_validation/
 """
-<<<<<<< HEAD
-function poisson3d(; n::Int = 10)
-=======
 function poisson3d(n :: Int = 10, args...; kwargs...)
->>>>>>> 8f59ae4 (change signature)
 
   #For instance, the following lines build a CartesianDiscreteModel for the unit cube
   # (0,1)^3 with n cells per direction
