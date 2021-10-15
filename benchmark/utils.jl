@@ -72,13 +72,15 @@ end
 
 using JLD2, DataFrames, Dates, SolverCore, NLPModels, SolverBenchmark
 
-function make_md(name, file_prefix::String="results")
+function make_md(name, opt_val, file_prefix::String="results")
     @load string(name,".jld2") stats
 
   open("$(file_prefix).md", "w") do io
     for solver in collect(keys(stats))
       println(io, "## $solver")
-      pretty_stats(io, stats[solver][!, [:name, :nvar, :ncon, :status, :objective, :elapsed_time, :neval_obj, :neval_cons, :dual_feas, :primal_feas]], 
+      df = stats[solver]
+      insertcols!(df, 1, :opt_val => opt_val)
+      pretty_stats(io, df[!, [:name, :nvar, :ncon, :status, :objective, :opt_val, :elapsed_time, :neval_obj, :neval_cons, :dual_feas, :primal_feas]], 
         tf=tf_markdown,
         hdr_override=Dict(:neval_obj => "#f", :neval_cons => "#c", :elapsed_time => "time (s)", :primal_feas => "feas"))
     end
