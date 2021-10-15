@@ -1,5 +1,7 @@
 using Pkg
 Pkg.activate(".")
+Pkg.add(url="https://github.com/tmigot/PDEOptimizationProblems")
+Pkg.instantiate()
 # This package
 using Gridap, PDENLPModels, PDEOptimizationProblems
 # Packages for rending
@@ -15,7 +17,7 @@ benchmark = [
 ]
 
 # II. Then, we prepare the models
-problems = (eval(pb)(n) for (pb, n, opt) in benchmark)
+problems = (eval(pb)(n = n) for (pb, n, opt) in benchmark)
 
 # III. We prepare the solvers
 max_time = 60.0 #20 minutes
@@ -42,16 +44,14 @@ solvers = Dict(
     ),
 )
 
-# III. Use SolverBenchmark to solve them with the different solvers (ipopt, dci, knitro)
+# III. Use SolverBenchmark to solve them with the different solvers
 stats = bmark_solvers(solvers, problems)
 
 # IV. Save the result in a JLD2 file
 list = ""
 for solver in keys(solvers)
-  list = string(list, "_$(solver)")
+  global list = string(list, "_$(solver)")
 end
-today = string(today())
-@save "$(today)_$(list)_$(string(length(pnames))).jld2" stats
+name = "$(string(today()))_$(list)_pdeoptimizationproblems"
 
-# V. Make a clean table in markdown
-# VI. Profile ?
+@save string(name,".jld2") stats
