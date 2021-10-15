@@ -87,7 +87,7 @@ function methanol(args...; n = 100, kwargs...)
     return ∫((y1 - z1) * (y1 - z1) + (y2 - z2) * (y2 - z2) + (y3 - z3) * (y3 - z3))dΩ
   end
   =#
-  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(3, 17, z, 1, τ, dΩ)
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(3, 17, z, 1, τ, dΩ, 1/n)
   f = (θ, y) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   xin = vcat(ones(5), zeros(Gridap.FESpaces.num_free_dofs(Ypde)))

@@ -27,8 +27,9 @@ struct InterpolatedEnergyFETerm{M}
   Xmes # times of measurements (nmes x ndim) or nmes length vector
   dΩ::M # measure for the integration
   δ::Array{Function} # array of functions of size nmes
+  h
 
-  function InterpolatedEnergyFETerm(ny, nymes, Ymes, ndim, Xmes, dΩ)
+  function InterpolatedEnergyFETerm(ny, nymes, Ymes, ndim, Xmes, dΩ, h)
     if size(Ymes) != (nymes, ny)
       throw(error("Dimension error size(Ymes) != (nymes, ny) ($(size(Ymes)), $((nymes, ny)))"))
     end
@@ -41,9 +42,9 @@ struct InterpolatedEnergyFETerm{M}
     end
     δ = Array{Function}(undef, nymes)
     for j = 1:nymes
-      δ[j] = t -> (t == Xmes[j,:] ? 1.0 : 0.0)
+      δ[j] = t -> exp(-(norm(t - Xmes[j])^2 / h))
     end
-    return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ)
+    return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ, h)
   end
 end
 

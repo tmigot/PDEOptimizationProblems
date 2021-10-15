@@ -89,7 +89,7 @@ function gasoil(args...; n = 100, kwargs...)
     return ∫((y1 - z1) * (y1 - z1) + (y2 - z2) * (y2 - z2))dΩ
   end
   =#
-  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(2, 21, z, 1, τ, dΩ)
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(2, 21, z, 1, τ, dΩ, 1/n)
   f = (θ, y) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   xin = vcat(zeros(3), zeros(Gridap.FESpaces.num_free_dofs(Ypde)))

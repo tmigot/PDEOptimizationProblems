@@ -48,7 +48,7 @@ function apinene(args...; n = 400, kwargs...)
     4.5 63.1 3.8 2.9 25.7
   ]
 
-  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(5, 8, zmes, 1, τ, dΩ)
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(5, 8, zmes, 1, τ, dΩ, 1/n)
   f = (θ, y) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
