@@ -9,7 +9,7 @@ for prob in setdiff(names(PDEOptimizationProblems), [:PDEOptimizationProblems])
   @time begin
     print(prob)
     prob_fn = PDEOptimizationProblems.eval(prob)
-    nlp = prob_fn(n = 10)
+    nlp = prob_fn(n = 3)
     println(" nvar=", nlp.meta.nvar, " ncon=", nlp.meta.ncon)
     obj(nlp, nlp.meta.x0)
     nlp.meta.ncon != 0 && cons(nlp, nlp.meta.x0)
