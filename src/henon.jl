@@ -3,7 +3,8 @@ export henon
 # Transition States for the Henon Problem COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=10, 20, 40
-function henon(args...; n = 10, kwargs...)
+function henon(n :: Int = 10, args...; kwargs...)
+
   domain = (-1, 1, -1, 1)
   model = CartesianDiscreteModel(domain, n)
 

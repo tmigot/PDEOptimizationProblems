@@ -3,7 +3,8 @@ export bearing
 # Journal Bearing COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n= 50, 75, 100
-function bearing(args...; n = 50, kwargs...)
+function bearing(n :: Int = 50, args...; kwargs...)
+  
   ϵ = 0.1
   b = 10
 

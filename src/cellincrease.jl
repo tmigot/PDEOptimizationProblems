@@ -5,7 +5,7 @@ Mairet, F., & Bayen, T. (2021). The promise of dawn: microalgae photoacclimation
 
 Using a photosynthetic rate proportional to the photosynthetic apparatus mass fraction.
 """
-function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
+function cellincrease(n :: Int = 10, args...; x0 = [0.6, 0.1], T = 7, kwargs...)
   kp(x) = 1.01
   kr(x) = 2.03
 

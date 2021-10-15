@@ -1,6 +1,6 @@
 export sis
 
-function sis(args...; x0 = [1, 2], n = 10, a = 0.2, b = 0.7, T = 1, kwargs...)
+function sis(n :: Int = 10, args...; x0 = [1, 2], a = 0.2, b = 0.7, T = 1, kwargs...)
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition

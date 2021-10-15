@@ -1,6 +1,6 @@
 export poisson_with_Neumann_and_Dirichlet
 
-function poisson_with_Neumann_and_Dirichlet(args...; n::Int = 10, kwargs...)
+function poisson_with_Neumann_and_Dirichlet(n :: Int = 10, args...; kwargs...)
   #model = DiscreteModelFromFile("https://github.com/gridap/Tutorials/tree/master/models/model.json")
   # model = DiscreteModelFromFile("models/model.json")
   #writevtk(model,"model")

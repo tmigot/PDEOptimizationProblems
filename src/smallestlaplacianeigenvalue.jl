@@ -23,7 +23,7 @@ TODO:
 - does the 1 work as it is? or should it be put in lcon, ucon?
 - it is 1D for now.
 """
-function smallestlaplacianeigenvalue(; n::Int = 10, args...)
+function smallestlaplacianeigenvalue(n :: Int = 10, args...; kwargs...)
 
   #Domain
   domain = (0, 1)

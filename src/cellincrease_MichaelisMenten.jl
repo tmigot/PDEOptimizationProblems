@@ -5,7 +5,7 @@ Mairet, F., & Bayen, T. (2021). The promise of dawn: microalgae photoacclimation
 
 Using Michaelis-Menten's function for the photosynthetic rate.
 """
-function cellincrease_MichaelisMenten(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
+function cellincrease_MichaelisMenten(n :: Int = 10, args...; x0 = [0.6, 0.1], T = 7, kwargs...)
   kp(x) = 1.6
   kr(x) = 2.1
   K(x) = 140.

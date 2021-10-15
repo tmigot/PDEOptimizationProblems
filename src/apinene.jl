@@ -2,7 +2,7 @@ export apinene
 
 # Isometrization of α-pinene COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
-function apinene(args...; n = 400, kwargs...)
+function apinene(n :: Int = 400, args...; kwargs...)
   T = 36420.0
   model = CartesianDiscreteModel((0, T), n)
 

@@ -3,7 +3,7 @@ export robot
 # Isometrization of Robot Arm COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=200, 400, 800
-function robot(args...; n = 400, kwargs...)
+function robot(n :: Int = 400, args...; kwargs...)
   T = 1.0
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)

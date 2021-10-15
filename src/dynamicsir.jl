@@ -1,6 +1,6 @@
 export dynamicsir
 
-function dynamicsir(args...; x0 = [1, 2], n = 10, T = 1, kwargs...)
+function dynamicsir(n :: Int = 10, args...; x0 = [1, 2], T = 1, kwargs...)
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition

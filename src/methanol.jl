@@ -3,7 +3,8 @@ export methanol
 # Methanol to Hydrocarbons COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=100, 200, 400
-function methanol(args...; n = 100, kwargs...)
+function methanol(n :: Int = 100, args...; kwargs...)
+
   model = CartesianDiscreteModel((0, 1), n)
 
   valuetype = Float64

@@ -3,7 +3,8 @@ export minsurf
 # Minimal Surface with Obstacle COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n= 50, 75, 100
-function minsurf(args...; n = 50, kwargs...)
+function minsurf(n :: Int = 50, args...; kwargs...)
+
   domain = (0, 1, 0, 1)
   model = CartesianDiscreteModel(domain, (n, n))
   trian = Triangulation(model)
