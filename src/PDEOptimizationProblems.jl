@@ -53,11 +53,11 @@ function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
   j = 1
   if ny > 1
     return sum(
-      [sum([∫(δ[j] ⋅ (dot(y[i] - Ymes[j, i], y[i] - Ymes[j, i])))dΩ for i=1:ny]) for j=1:nymes]
+      sum(∫(δ[j] ⋅ (dot(y[i] - Ymes[j, i], y[i] - Ymes[j, i])))dΩ for i=1:ny) for j=1:nymes
     )
   else # ny = 1
     return sum(
-      [∫(δ[j] ⋅ (dot(y - Ymes[j, 1], y - Ymes[j, 1])))dΩ for j=1:nymes]
+      ∫(δ[j] ⋅ (dot(y - Ymes[j, 1], y - Ymes[j, 1])))dΩ for j=1:nymes
     )
   end
 end
