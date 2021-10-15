@@ -7,7 +7,7 @@ using Gridap, PDENLPModels, PDEOptimizationProblems
 # Packages for rending
 using DataFrames, Dates, JLD2, SolverBenchmark
 # Solvers
-using DCISolver, NLPModelsIpopt
+using DCISolver, NLPModelsIpopt, NLPModelsKnitro
 
 # I. Make a triplet with (problem_symbol, parameter, known_optimal_value_or_missing)
 benchmark = [
@@ -33,6 +33,13 @@ solvers = Dict(
       max_cpu_time = max_time,
       x0 = nlp.meta.x0,
     ),
+  :knitro =>nlp -> knitro(nlp, out_hints = 0, outlev = 0,
+    feastol = 1e-5,
+    feastol_abs = 1e-5,
+    opttol = 1e-5,
+    opttol_abs = 1e-5,
+    maxtime_cpu = max_time,
+    x0 = nlp.meta.x0),
   :DCILDL =>
     nlp -> dci(
       nlp,
