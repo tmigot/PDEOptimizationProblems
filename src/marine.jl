@@ -83,7 +83,7 @@ function marine(args...; n = 400, T = 10.0, kwargs...)
     1.0    12.0   198.0   707.0  2562.0  3163.0  3232.0  5566.0
   ]
 
-  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(8, 21, zmes, 1, τ, dΩ)
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(8, 21, zmes, 1, τ, dΩ, 1 / n)
   f = (y, u) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Ypde) + Gridap.FESpaces.num_free_dofs(Ycon)
@@ -91,8 +91,8 @@ function marine(args...; n = 400, T = 10.0, kwargs...)
   return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "Marine Population Dynamics n=$n")
 end
 
-apinene_meta = Dict(
-  :name => "apinene",
+marine_meta = Dict(
+  :name => "marine",
   :domaindim => UInt8(1),
   :pbtype => :yu,
   :nθ => 0,
