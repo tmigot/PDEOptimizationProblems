@@ -58,7 +58,7 @@ function torsion(args...; n = 3, kwargs...)
       Inf * ones(Gridap.FESpaces.num_free_dofs(U0)),
       Inf * ones(Gridap.FESpaces.num_free_dofs(U0)),
     ),
-    name = "Elastic-Plastic Torsion",
+    name = "Elastic-Plastic Torsion n=$n",
   )
 end
 

@@ -102,7 +102,7 @@ function methanol(args...; n = 100, kwargs...)
     op,
     lvar = lvar,
     uvar = uvar,
-    name = "Methanol to Hydrocarbons",
+    name = "Methanol to Hydrocarbons n=$n",
   )
 end
 

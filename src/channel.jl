@@ -44,7 +44,7 @@ function channel(args...; n = 400, kwargs...)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs)
-  return GridapPDENLPModel(xin, NoFETerm(), Y, X, op, name = "Flow in a Channel")
+  return GridapPDENLPModel(xin, NoFETerm(), Y, X, op, name = "Flow in a Channel n=$n")
 end
 
 channel_meta = Dict(

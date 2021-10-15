@@ -71,7 +71,7 @@ function controlelasticmembrane1(args...; n::Int = 10, kargs...)
     op,
     lvaru = zeros(ncon),
     uvaru = ones(ncon),
-    name = "controlelasticmembrane1",
+    name = "controlelasticmembrane1 n=$n",
   )
 end
 

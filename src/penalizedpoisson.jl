@@ -37,7 +37,7 @@ function penalizedpoisson(args...; n = 2^4, kwargs...)
   end
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Ypde))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Xpde, name = "penalized Poisson")
+  return GridapPDENLPModel(xin, f, trian, Ypde, Xpde, name = "penalized Poisson n=$n")
 end
 
 penalizedpoisson_meta = Dict(

@@ -38,7 +38,7 @@ function morebv(args...; n = 3, kwargs...)
     V0,
     lvar = lb,
     uvar = Inf * ones(nU0),
-    name = "MOREBV",
+    name = "MOREBV n=$n",
   )
 end
 

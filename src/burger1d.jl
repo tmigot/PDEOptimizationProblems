@@ -76,7 +76,7 @@ function burger1d(args...; n::Int = 512, kwargs...)
   nvar_pde = Gridap.FESpaces.num_free_dofs(Ypde)
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
   x0 = zeros(nvar_pde + nvar_con)
-  nlp = GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "burger1d")
+  nlp = GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "burger1d n=$n")
 
   #=
   #The solution is just  y = yd and u=0. 

@@ -84,7 +84,7 @@ function inversepoissonproblem2d(; n::Int = 100)
     Xcon,
     op,
     lvaru = zeros(ncon),
-    name = "inversePoissonproblem2d",
+    name = "inversePoissonproblem2d n=$n",
   )
 end
 

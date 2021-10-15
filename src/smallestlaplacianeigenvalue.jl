@@ -52,7 +52,7 @@ function smallestlaplacianeigenvalue(; n::Int = 10, args...)
   end
   op = FEOperator(res, Ypde, Xpde)
   xin = zeros(Gridap.FESpaces.num_free_dofs(Ypde))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Xpde, op, name = "smallestLaplacianeigenvalue")
+  return GridapPDENLPModel(xin, f, trian, Ypde, Xpde, op, name = "smallestLaplacianeigenvalue n=$n")
 end
 
 smallestlaplacianeigenvalue_meta = Dict(

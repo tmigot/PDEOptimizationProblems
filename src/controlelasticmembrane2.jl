@@ -82,7 +82,7 @@ function controlelasticmembrane2(; n::Int = 10, args...)
     op,
     lvaru = lvaru,
     uvaru = uvaru,
-    name = "controlelasticmembrane2",
+    name = "controlelasticmembrane2 n=$n",
   )
 end
 

@@ -110,7 +110,7 @@ function glider(args...; n = 100, kwargs...)
       -Inf * ones(Gridap.FESpaces.num_free_dofs(YY)),
       -Inf * ones(Gridap.FESpaces.num_free_dofs(Yyp)),
     ),
-    name = "Hang Glider",
+    name = "Hang Glider n=$n",
   )
 end
 

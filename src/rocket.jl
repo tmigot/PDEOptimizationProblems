@@ -110,7 +110,7 @@ function rocket(args...; n = 400, kwargs...)
       Inf * ones(Gridap.FESpaces.num_free_dofs(Yv)),
       m₀ * ones(Gridap.FESpaces.num_free_dofs(Ym)),
     ),
-    name = "Goddard Rocket",
+    name = "Goddard Rocket n=$n",
   )
 end
 

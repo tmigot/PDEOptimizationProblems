@@ -64,7 +64,7 @@ function torebrachistochrone(args...; n = 3, kwargs...)
     V,
     lvar = xmin * ones(nU0 + nU1),
     uvar = xmax * ones(nU0 + nU1),
-    name = "Brachistochrone on tore",
+    name = "Brachistochrone on tore n=$n",
   )
 end
 

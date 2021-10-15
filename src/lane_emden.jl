@@ -26,7 +26,7 @@ function lane_emden(args...; n = 10, kwargs...)
     trian,
     U0,
     V0,
-    name = "Transition States for the Lane-Emden Problem",
+    name = "Transition States for the Lane-Emden Problem n=$n",
   )
 end
 

@@ -62,7 +62,7 @@ function minsurf(args...; n = 50, kwargs...)
     op,
     lvaru = zeros(nUs),
     uvaru = Inf * ones(nUs),
-    name = "Minimal Surface with Obstacle",
+    name = "Minimal Surface with Obstacle n=$n",
   )
 end
 

@@ -40,7 +40,7 @@ function bearing(args...; n = 50, kwargs...)
     V,
     lvar = zeros(nU),
     uvar = Inf * ones(nU),
-    name = "Journal Bearing",
+    name = "Journal Bearing n=$n",
   )
 end
 

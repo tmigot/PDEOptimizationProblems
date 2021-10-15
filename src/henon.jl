@@ -28,7 +28,7 @@ function henon(args...; n = 10, kwargs...)
     trian,
     U0,
     V0,
-    name = "Transition States for the Henon Problem",
+    name = "Transition States for the Henon Problem n=$n",
   )
 end
 

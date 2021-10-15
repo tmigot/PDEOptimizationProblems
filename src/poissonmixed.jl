@@ -49,7 +49,7 @@ function poissonmixed(args...; n = 3, kwargs...)
 
   nUg = num_free_dofs(Ug)
   x0 = zeros(nUg + 2)
-  return GridapPDENLPModel(x0, nrj, Ug, V0, op, name = "poissonmixed")
+  return GridapPDENLPModel(x0, nrj, Ug, V0, op, name = "poissonmixed n=$n")
 end
 
 poissonmixed_meta = Dict(

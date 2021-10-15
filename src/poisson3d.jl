@@ -49,7 +49,7 @@ function poisson3d(; n::Int = 10)
     ∫((ybis - y) * (ybis - y) + (∇(y) - ∇ybis) ⊙ (∇(y) - ∇ybis) + (u - ubis) * (u - ubis)) * dΩ
   end
   x0 = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "3D-Poisson")
+  return GridapPDENLPModel(x0, f, trian, Ypde, Ycon, Xpde, Xcon, op, name = "3D-Poisson n=$n")
 end
 
 poisson3d_meta = Dict(
