@@ -65,7 +65,7 @@ function steering(args...; n = 400, kwargs...)
     op,
     lvaru = -pi / 2 * ones(ndofs_con),
     uvaru = pi / 2 * ones(ndofs_con),
-    name = "Particle Steering",
+    name = "Particle Steering n=$n",
   )
 end
 

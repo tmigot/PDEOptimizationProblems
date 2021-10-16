@@ -104,7 +104,7 @@ function gasoil(args...; n = 100, kwargs...)
     op,
     lvar = lvar,
     uvar = uvar,
-    name = "Catalytic Cracking of Gas Oil",
+    name = "Catalytic Cracking of Gas Oil n=$n",
   )
 end
 

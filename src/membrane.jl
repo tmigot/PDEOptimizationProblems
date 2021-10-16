@@ -53,7 +53,7 @@ function membrane(args...; n = 3, kwargs...)
     V0,
     lvar = lb,
     uvar = Inf * ones(nU0),
-    name = "membrane",
+    name = "membrane n=$n",
   )
 end
 

@@ -57,7 +57,7 @@ function cellincrease_MichaelisMenten(args...; x0 = [0.6, 0.1], n = 10, T = 7, k
   op_sir = FEOperator(res, Ypde, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "cellincrease_MichaelisMenten")
+  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "cellincrease_MichaelisMenten n=$n")
 end
 
 cellincrease_MichaelisMenten_meta = Dict(

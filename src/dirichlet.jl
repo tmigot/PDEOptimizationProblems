@@ -27,7 +27,7 @@ function dirichlet(args...; n = 10, kwargs...)
     trian,
     U0,
     V0,
-    name = "Transition States for the Dirichlet Problem",
+    name = "Transition States for the Dirichlet Problem n=$n",
   )
 end
 

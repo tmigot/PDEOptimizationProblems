@@ -50,7 +50,7 @@ function poisson_with_Neumann_and_Dirichlet(args...; n::Int = 10, kwargs...)
     Xpde,
     Xcon,
     op,
-    name = "poisson with Neumann and Dirichlet",
+    name = "poisson with Neumann and Dirichlet n=$n",
   )
 end
 

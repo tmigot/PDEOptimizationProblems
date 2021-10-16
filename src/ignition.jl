@@ -40,7 +40,7 @@ function ignition(args...; n = 3, kwargs...)
     V0,
     lvar = lb,
     uvar = 0.5 * ones(nU0),
-    name = "IGNITION",
+    name = "IGNITION n=$n",
   )
 end
 

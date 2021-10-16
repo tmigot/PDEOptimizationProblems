@@ -76,7 +76,7 @@ function catmix(args...; n::Int = 100, kwargs...)
     op,
     lvaru = zeros(nvar_con),
     uvaru = ones(nvar_con),
-    name = "Catalyst Mixing",
+    name = "Catalyst Mixing n=$n",
   )
 end
 

@@ -89,7 +89,7 @@ function robot(args...; n = 400, kwargs...)
     uvaru = ones(ndofs_con),
     lvary = lvar,
     uvary = uvar,
-    name = "Robot Arm",
+    name = "Robot Arm n=$n",
   )
 end
 
