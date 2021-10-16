@@ -1,5 +1,5 @@
 function meta_sanity(name)
-  ndef = 13 # PDEOptimizationProblems.default_nvar
+  ndef = 5 # PDEOptimizationProblems.default_nvar
   meta = eval(Meta.parse("PDEOptimizationProblems.$(name)_meta"))
   n, m = eval(Meta.parse("PDEOptimizationProblems.get_$(name)_meta($ndef)"))
 

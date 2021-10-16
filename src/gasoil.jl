@@ -75,6 +75,7 @@ function gasoil(args...; n = 100, kwargs...)
     0.85
     0.95
   ]
+  #=
   function z1(t)
     i = findfirst(x -> x ≥ t[1], τ)
     return isnothing(i) ? z[end, 1] : z[i, 1]
@@ -87,6 +88,9 @@ function gasoil(args...; n = 100, kwargs...)
     y1, y2 = y
     return ∫((y1 - z1) * (y1 - z1) + (y2 - z2) * (y2 - z2))dΩ
   end
+  =#
+  objterm = PDEOptimizationProblems.InterpolatedEnergyFETerm(2, 21, z, 1, τ, dΩ, 1/n)
+  f = (θ, y) -> PDEOptimizationProblems.interpolated_measurement(objterm, y)
 
   xin = vcat(zeros(3), zeros(Gridap.FESpaces.num_free_dofs(Ypde)))
   lvar = vcat(-Inf * ones(Gridap.FESpaces.num_free_dofs(Ypde)), zeros(3))
