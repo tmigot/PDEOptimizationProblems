@@ -47,9 +47,9 @@ benchmark = [
   (:minsurf, 50, 2.51488e00),
   (:minsurf, 75, 2.50568e00),
   (:minsurf, 100, 2.50694e00),
-  (:robot, 200, 9.14138),
-  (:robot, 400, 9.14101),
-  (:robot, 800, 9.14093),
+  #(:robot, 200, 9.14138), # final time optimization not implemented
+  #(:robot, 400, 9.14101),
+  #(:robot, 800, 9.14093),
   (:rocket, 400, 1.01283e00),
   (:rocket, 800, 1.01283e00),
   (:rocket, 1600, 1.01283e00),
