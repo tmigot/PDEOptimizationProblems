@@ -27,7 +27,9 @@ struct InterpolatedEnergyFETerm{M}
   Xmes # times of measurements (nmes x ndim) or nmes length vector
   dΩ::M # measure for the integration
   δ::Array{Function} # array of functions of size nmes
+  Sδ
   h
+  interpolated_y
 
   function InterpolatedEnergyFETerm(ny, nymes, Ymes, ndim, Xmes, dΩ, h)
     if size(Ymes) != (nymes, ny)
@@ -44,10 +46,23 @@ struct InterpolatedEnergyFETerm{M}
     for j = 1:nymes
       δ[j] = t -> exp(-(norm(t - Xmes[j])^2 / h))
     end
-    return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ, h)
+    Sδ = x -> sum(δ[j](x) for j=1:nymes)
+    interpolated_y = Array{Function}(undef, ny)
+    for j = 1:ny
+      if ndim > 1
+        throw(error("Not implemented interpolation for dimension > 1. Please open an issue with an example."))
+      end
+      interpolated_y[j] = t -> begin
+        i = findfirst(x -> x ≥ t[1], Xmes) #Assuming 1D
+        h = isnothing(i) ? (Xmes[i] - t[1]) / (Xmes[i - 1] - Xmes[i]) : 1
+        return isnothing(i) || i == 1 ? Ymes[1, j] : Ymes[i - 1, j] + h * Ymes[i, j]
+      end
+    end
+    return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ, Sδ, h, interpolated_y)
   end
 end
-
+#=
+# This is way too slow
 function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
   nymes, ny = IT.nymes, IT.ny
   Ymes, dΩ, δ = IT.Ymes, IT.dΩ, IT.δ
@@ -60,6 +75,22 @@ function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
     return sum(
       ∫(δ[j] ⋅ (dot(y - Ymes[j, 1], y - Ymes[j, 1])))dΩ for j=1:nymes
     )
+  end
+end
+=#
+function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
+  ny = IT.ny
+  dΩ = IT.dΩ
+  Sδ = IT.Sδ
+  interpolated_y = IT.interpolated_y
+  if ny > 1
+    # Function get_data is not implemented for MultiFieldCellField at this moment.
+    # You need to extract the individual fields and then evaluate them separately.
+    return sum(
+      ∫(Sδ ⋅ dot(y[i] - interpolated_y[i], y[i] - interpolated_y[i]))dΩ for i=1:ny
+    )
+  else # ny = 1
+    return ∫(Sδ ⋅ dot(y - interpolated_y[1], y - interpolated_y[1]))dΩ
   end
 end
 
