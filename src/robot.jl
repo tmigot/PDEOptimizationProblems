@@ -51,7 +51,15 @@ function robot(args...; n = 400, kwargs...)
 
   Iφ(ρ) = ((L - ρ) * (L - ρ) * (L - ρ) + ρ * ρ * ρ) / 3
   Iθ(ρ, φ) = Iφ(ρ) * (sin ∘ φ) * (sin ∘ φ)
-  function res(y, u, v)
+#=
+Evaluation of a CellField at a given Point is not implemented yet.
+
+This is a feature that we want to have at some point in Gridap.
+If you are ready to help with this implementation, please contact the
+Gridap administrators.
+=#
+  hi(ρ, k) = x -> ρ(k[1]) # ρ(x) # would love ρ(k[1])
+  function res(k, y, u, v)
     ρ, θ, φ = y
     uρ, uθ, uφ = u
     p, q, r = v
@@ -59,9 +67,12 @@ function robot(args...; n = 400, kwargs...)
       (L * (∇(p) ⋅ ∇(ρ)) - uρ * p) +
       (Iθ(ρ, φ) * (∇(q) ⋅ ∇(θ)) - uθ * p) +
       (Iφ(ρ) * (∇(r) ⋅ ∇(φ)) - uφ * p)
-    )dΩ # + ∫(p * 0 + q * 0 + r * 0) * dΓ
+    )dΩ + ∫(p * 0 + q * 0 + r * 0) * dΓ + ∫( hi(ρ, k) )dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
+
+  fk(k) = 0.5 * dot(k .- 1.0, k .- 1.0)
+  nrj = NoFETerm(fk) #length(k)=1
 
   ndofs_pde = Gridap.FESpaces.num_free_dofs(Ypde)
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
@@ -72,6 +83,7 @@ function robot(args...; n = 400, kwargs...)
   cell_xm = lazy_map(midpoint, cell_xs)
   cell_l = lazy_map(x -> 2pi / 3 * (x / T) ⋅ (x / T), cell_xm)
   xin = vcat(
+    T,
     4.5 * ones(Gridap.FESpaces.num_free_dofs(Yρ)),
     get_free_values(Gridap.FESpaces.interpolate(cell_l, Yθ)),
     4.5 * ones(Gridap.FESpaces.num_free_dofs(Yφ)),
@@ -79,7 +91,7 @@ function robot(args...; n = 400, kwargs...)
   )
   return GridapPDENLPModel(
     xin,
-    NoFETerm(), # this is a final time problem
+    NoFETerm(k -> k[1]), # this is a final time problem
     Ypde,
     Ycon,
     Xpde,
@@ -89,6 +101,8 @@ function robot(args...; n = 400, kwargs...)
     uvaru = ones(ndofs_con),
     lvary = lvar,
     uvary = uvar,
+    lvark = [0],
+    uvark = [T],
     name = "Robot Arm n=$n",
   )
 end
