@@ -21,14 +21,27 @@ function marine(args...; n = 400, T = 10.0, kwargs...)
   conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
   c(u, v) = conv ∘ (v, ∇(u))
   function res(y, u, p)
-    # y1, y2, y3, y4, y5, y6, y7, y8 = y
-    # m1, m2, m3, m4, m5, m6, m7, m8, g1, g2, g3, g4, g5, g6, g7 = u
-    # p1, p2, p3, p4, p5, p6, p7, p8 = v
-    return ∫( c(y[1], p[1]) + (u[1] + u[8 + 1]) * y[1] )dΩ + 
-    sum(∫(
-      c(y[j], p[j]) - u[8 + j -1] * y[j - 1] + (u[j] + u[8 + j]) * y[j]
-    )dΩ for j=2:7) +
-    ∫( c(y[8], p[8]) - u[15] * y[7] + u[8] * y[8] )dΩ
+    y1, y2, y3, y4, y5, y6, y7, y8 = y
+    m1, m2, m3, m4, m5, m6, m7, m8, g1, g2, g3, g4, g5, g6, g7 = u
+    p1, p2, p3, p4, p5, p6, p7, p8 = p
+    return ∫( c(y1, p1) + p1 * (m1 + g1) * y1 + 
+      c(y2, p2) - p2 * g1 * y1 + p2 * (m2 + g2) * y2 +
+      c(y3, p3) - p3 * g2 * y2 + p3 * (m3 + g3) * y3 +
+      c(y4, p4) - p4 * g3 * y3 + p4 * (m4 + g4) * y4 +
+      c(y5, p5) - p5 * g4 * y4 + p5 * (m5 + g5) * y5 +
+      c(y6, p6) - p6 * g5 * y5 + p6 * (m6 + g6) * y6 +
+      c(y7, p7) - p7 * g6 * y6 + p7 * (m7 + g7) * y7 +
+      c(y8, p8) - p8 * g7 * y7 + p8 * m8 * y8 )dΩ
+    #=
+    return ∫( c(y[1], p[1]) + (u[1] + u[8 + 1]) * y[1] + 
+      c(y[2], p[2]) - u[8 + 2 -1] * y[2 - 1] + (u[2] + u[8 + 2]) * y[2] +
+      c(y[3], p[3]) - u[8 + 3 -1] * y[3 - 1] + (u[3] + u[8 + 3]) * y[3] +
+      c(y[4], p[4]) - u[8 + 4 -1] * y[4 - 1] + (u[4] + u[8 + 4]) * y[4] +
+      c(y[5], p[5]) - u[8 + 5 -1] * y[5 - 1] + (u[5] + u[8 + 5]) * y[5] +
+      c(y[6], p[6]) - u[8 + 6 -1] * y[6 - 1] + (u[6] + u[8 + 6]) * y[6] +
+      c(y[7], p[7]) - u[8 + 7 -1] * y[7 - 1] + (u[7] + u[8 + 7]) * y[7] +
+      c(y[8], p[8]) - u[15] * y[7] + u[8] * y[8] )dΩ
+    =#
   end
 
   trian = Triangulation(model)

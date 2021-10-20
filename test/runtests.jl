@@ -4,7 +4,7 @@ using PDEOptimizationProblems
 include("utils.jl")
 
 # Test that every problem can be instantiated.
-for prob in setdiff(names(PDEOptimizationProblems), [:PDEOptimizationProblems])
+for prob in [:marine] #setdiff(names(PDEOptimizationProblems), [:PDEOptimizationProblems])
   @time begin
     print(prob)
     prob_fn = PDEOptimizationProblems.eval(prob)
