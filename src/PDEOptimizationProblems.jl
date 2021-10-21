@@ -54,7 +54,7 @@ struct InterpolatedEnergyFETerm{M}
       end
       interpolated_y[j] = t -> begin
         i = findfirst(x -> x ≥ t[1], Xmes) #Assuming 1D
-        h = isnothing(i) ? (Xmes[i] - t[1]) / (Xmes[i - 1] - Xmes[i]) : 1
+        h = isnothing(i) || i == 1 ? 1 : (Xmes[i] - t[1]) / (Xmes[i - 1] - Xmes[i])
         return isnothing(i) || i == 1 ? Ymes[1, j] : Ymes[i - 1, j] + h * Ymes[i, j]
       end
     end
