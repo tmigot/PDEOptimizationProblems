@@ -1,9 +1,6 @@
-function meta_sanity(name)
-  ndef = 5 # PDEOptimizationProblems.default_nvar
+function meta_sanity(name, nlp, ndef)
   meta = eval(Meta.parse("PDEOptimizationProblems.$(name)_meta"))
   n, m = eval(Meta.parse("PDEOptimizationProblems.get_$(name)_meta($ndef)"))
-
-  nlp = eval(Meta.parse("PDEOptimizationProblems.$(name)(n = $ndef)"))
 
   @show nlp.meta.name, meta[:name]
   if !(name in [:incompressiblenavierstokes])
@@ -28,4 +25,10 @@ function meta_sanity(name)
   @test NLPModels.unconstrained(nlp) == (meta[:contype] == :unconstrained)
   @test NLPModels.bound_constrained(nlp) == (meta[:contype] == :bounds)
   @test NLPModels.linearly_constrained(nlp) == (meta[:contype] == :linear)
+end
+
+function meta_sanity(name)
+  ndef = 5 # PDEOptimizationProblems.default_nvar
+  nlp = eval(Meta.parse("PDEOptimizationProblems.$(name)(n = $ndef)"))
+  return meta_sanity(name, nlp, ndef)
 end
