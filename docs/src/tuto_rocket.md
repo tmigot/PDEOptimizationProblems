@@ -29,6 +29,7 @@ Finally, we can plot the functions, and the results match JuMP's tutorial and CO
 
 ```@example 1
 using Plots
+pyplot()
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
 Plots.plot(
