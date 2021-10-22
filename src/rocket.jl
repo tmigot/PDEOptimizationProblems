@@ -3,9 +3,9 @@ export rocket
 # Goddard Rocket COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=400, 800, 1600
-function rocket(args...; n = 400, kwargs...)
+function rocket(args...; n = 400, T = 1, kwargs...)
 
-  model = CartesianDiscreteModel((0, 1), n)
+  model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition
   add_tag_from_tags!(labels, "diri1", [2])
@@ -35,12 +35,10 @@ function rocket(args...; n = 400, kwargs...)
   YH = TrialFESpace(Vfree)
   Yv = TrialFESpace(V0, 0.0)
   Ym = TrialFESpace(V1, [m₀, mᵪ * m₀])
-  VS = TestFESpace(model, reffe; conformity = :L2)
-  U = TrialFESpace(VS)
   Xpde = MultiFieldFESpace([V0, Vfree, V0, V1])
   Ypde = MultiFieldFESpace([Yh, YH, Yv, Ym])
-  Xcon = VS # MultiFieldFESpace([VS])
-  Ycon = U # MultiFieldFESpace([U])
+  Xcon = TestFESpace(model, reffe; conformity = :L2)
+  Ycon = TrialFESpace(Xcon)
 
   trian = Triangulation(model)
   degree = 1
@@ -66,7 +64,7 @@ function rocket(args...; n = 400, kwargs...)
 
   function f(y, u)
     h, H, v, m = y
-    return ∫( -H )dΩ
+    return ∫( -H/T )dΩ
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
