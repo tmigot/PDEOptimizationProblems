@@ -10,7 +10,7 @@ The minimizer of this problem is the solution of the Poisson equation:
  ∫_Ω​ (∇u ∇v - f*v)dx = 0, ∀ v ∈ Ω
  u = 0, x ∈ ∂Ω
 
-This example has been used in [Exercice 10.2.4 (p. 308)](G. Allaire, Analyse numérique et optimisation, Les éditions de Polytechnique)
+This example has been used in Exercice 10.2.4 (p. 308) of G. Allaire, Analyse numérique et optimisation, Les éditions de Polytechnique
 """
 function penalizedpoisson(args...; n = 2^4, kwargs...)
   domain = (0, 1, 0, 1)

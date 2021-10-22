@@ -16,9 +16,9 @@ We discretize using P1 finite elements on a uniform mesh with 10201 triangles,
 resulting in a problem with n = 20002 variables and m = 9801 constraints.
 We use y_0=1 and u_0 = 1 as the initial point.
 
-This example has been used in [Section 9.3](Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
+This example has been used in, Section 9.3, Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
 Implementing a smooth exact penalty function for equality-constrained nonlinear optimization.
-SIAM Journal on Scientific Computing, 42(3), A1809-A1835.)
+SIAM Journal on Scientific Computing, 42(3), A1809-A1835.
 
 The specificity of the problem:
 - quadratic objective function;

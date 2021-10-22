@@ -24,9 +24,9 @@ triangles and employ an identical discretization for the optimization variables 
 Initial point is y_0=1 and u_0 = 1.
 z ≥ 0 (implicit)
 
-This example has been used in [Section 9.2](Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
+This example has been used in, Section 9.2, Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
 Implementing a smooth exact penalty function for equality-constrained nonlinear optimization.
-SIAM Journal on Scientific Computing, 42(3), A1809-A1835.)
+SIAM Journal on Scientific Computing, 42(3), A1809-A1835.
 """
 function inversepoissonproblem2d(; n::Int = 100)
 

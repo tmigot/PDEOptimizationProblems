@@ -16,7 +16,7 @@ makedocs(;
     canonical = "https://tmigot.github.io/PDEOptimizationProblems",
     assets = ["assets/style.css"],
   ),
-  pages = ["Home" => "index.md", "COPS" => "cops.md", "Reference" => "reference.md"],
+  pages = ["Home" => "index.md", "COPS" => "cops.md", "Rocket Control" => "tuto_rocket.md", "Reference" => "reference.md"],
 )
 
 deploydocs(;
