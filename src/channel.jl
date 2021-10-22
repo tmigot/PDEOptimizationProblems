@@ -2,6 +2,7 @@ export channel
 
 # Isometrization of Flow in a Channel COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
+# n=200, 400, 800
 function channel(args...; n = 400, kwargs...)
   model = CartesianDiscreteModel((0, 1), n)
 

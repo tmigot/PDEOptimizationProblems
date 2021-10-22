@@ -1,1 +1,4 @@
 Manifest.toml
+benchmark/*.md
+benchmark/*.png
+benchmark/*.jld2

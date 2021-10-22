@@ -2,6 +2,7 @@ export torsion
 
 # Elastic-Plastic Torsion COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
+# n= 50, 75, 100
 function torsion(args...; n = 3, kwargs...)
   # n est la taille de la discrétisation (entier)
   # le domain au format (t₀, T)
