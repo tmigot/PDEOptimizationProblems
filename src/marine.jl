@@ -2,18 +2,12 @@ export marine
 
 # Marine Population Dynamics COPS Problem v.0.3.1
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
-function marine(args...; n = 400, kwargs...)
-  T = 10.0
+function marine(args...; n = 400, T = 10.0, kwargs...)
   model = CartesianDiscreteModel((0, T), n)
-
-  labels = get_face_labeling(model)
-  add_tag_from_tags!(labels, "diri0", [1]) #initial time condition
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
   Vfree = TestFESpace(model, reffe; conformity = :H1)
-  VI = TestFESpace(model, reffe; conformity = :H1, labels = labels, dirichlet_tags = ["diri0"])
-  UI = TrialFESpace(VI, 0.0)
   Ufree = TrialFESpace(Vfree)
   Xpde = MultiFieldFESpace([Vfree, Vfree, Vfree, Vfree, Vfree, Vfree, Vfree, Vfree])
   Ypde = MultiFieldFESpace([Ufree, Ufree, Ufree, Ufree, Ufree, Ufree, Ufree, Ufree])
@@ -118,4 +112,4 @@ apinene_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_marine_meta(n::Integer = default_nvar) = (15 * (n + 1), 5 * (n + 1))
+get_marine_meta(n::Integer = default_nvar) = (23 * (n + 1), 8 * (n + 1))
