@@ -50,10 +50,6 @@ function glider(args...; n = 100, kwargs...)
   Γ = BoundaryTriangulation(model, tags=["diri1"])
   dΓ = Measure(Γ, degree)
 
-  # for the weak formulation of dy/dt
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
-
   r(x) = (x / rᵪ - 2.5) * (x / rᵪ - 2.5)
   u(x) = uᵪ * (1 - r(x)) * (exp ∘ (-r(x)))
   w(x, yp) = yp - u(x)
@@ -64,11 +60,11 @@ function glider(args...; n = 100, kwargs...)
     x, xp, y, Y, yp = xy
     px, pxp, py, pY, pyp = v
     return ∫(
-      (c(x, px) - xp * px) +
-      (c(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp)) +
-      (c(y, py) - py * yp) +
-      (c(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))) +
-      c(Y, pY) )dΩ  + ∫( (Y - y) * pY )dΓ
+      (dt(x, px) - xp * px) +
+      (dt(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp)) +
+      (dt(y, py) - py * yp) +
+      (dt(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))) +
+      dt(Y, pY) )dΩ  + ∫( (Y - y) * pY )dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
 

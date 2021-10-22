@@ -29,14 +29,12 @@ function channel(args...; n = 400, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
   R = 10.0 # Reynold's constant
   function res(y, v)
     y1, y2, y3, y4 = y
     p1, p2, p3, p4 = v
     ∫(
-      c(y1, p1) - p1 * y2 + c(y2, p2) - p2 * y3 + c(y3, p3) - p3 * y3 + c(y4, p4) -
+      dt(y1, p1) - p1 * y2 + dt(y2, p2) - p2 * y3 + dt(y3, p3) - p3 * y3 + dt(y4, p4) -
       p4 * R * (y2 * y3 - y1 * y4),
     )dΩ
   end

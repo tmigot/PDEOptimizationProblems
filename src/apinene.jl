@@ -20,13 +20,11 @@ function apinene(args...; n = 400, kwargs...)
   X = MultiFieldFESpace([VI, VI, VI, VI, VI])
   Y = MultiFieldFESpace([UI, US, US, US, US])
 
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
   function res(k, y, v)
     y1, y2, y3, y4, y5 = y
     p1, p2, p3, p4, p5 = v
     ∫(
-      c(y1, p1) + c(y2, p2) + c(y3, p3) + c(y4, p4) + c(y5, p5) - p1 * (-(k[1] + k[2]) * y1) -
+      dt(y1, p1) + dt(y2, p2) + dt(y3, p3) + dt(y4, p4) + dt(y5, p5) - p1 * (-(k[1] + k[2]) * y1) -
       p2 * (k[1] * y1) - p3 * (k[2] * y1 - (k[3] + k[4]) * y3 + k[5] * y5) - p4 * (k[3] * y3) -
       p5 * (k[4] * y3 - k[5] * y5),
     )dΩ

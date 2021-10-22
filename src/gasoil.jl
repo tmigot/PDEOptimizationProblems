@@ -17,14 +17,11 @@ function gasoil(args...; n = 100, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  # for the weak formulation of dy/dt
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
   function res(θ, y, v)
     y1, y2 = y
     v1, v2 = v
     return ∫(
-      (c(y1, v1) + v1 * (θ[1] + θ[3]) * y1 * y1) + (c(y2, v2) - θ[1] * y1 * y1 - θ[2] * y2),
+      (dt(y1, v1) + v1 * (θ[1] + θ[3]) * y1 * y1) + (dt(y2, v2) - θ[1] * y1 * y1 - θ[2] * y2),
     )dΩ
   end
   op = FEOperator(res, Ypde, Xpde)

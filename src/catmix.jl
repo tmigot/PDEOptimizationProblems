@@ -42,16 +42,14 @@ function catmix(args...; n::Int = 100, kwargs...)
   end
 
   #Definition of the constraint operator
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = v ⊙ (conv ∘ (u, ∇(u)))
   function res(y, u, v)
     y1, Y1, y2, Y2 = y
     v1, V1, v2, V2 = v
     return ∫(
-      c(y1, v1) - v1 * u * (10 * y2 - y1) + 
-      c(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u) +
-      c(Y1, V1) + 
-      c(Y2, V2) )dΩ + 
+      dt(y1, v1) - v1 * u * (10 * y2 - y1) + 
+      dt(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u) +
+      dt(Y1, V1) + 
+      dt(Y2, V2) )dΩ + 
       ∫( (Y1 - y1) * V1 )dΓ  + ∫( (Y2 - y2) * V2 )dΓ
   end
   op = FEOperator(res, Ypde, Xpde)
