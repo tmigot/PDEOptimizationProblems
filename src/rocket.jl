@@ -50,20 +50,16 @@ function rocket(args...; n = 400, kwargs...)
   Γ = BoundaryTriangulation(model, tags=["diri1"])
   dΓ = Measure(Γ, degree)
 
-  # for the weak formulation of dy/dt
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
-
   D(h, v) = Dᵪ * v * v * (exp ∘ (-hᵪ * (h - h₀) / h₀))
   g(h) = g₀ * (h₀ / h) * (h₀ / h)
   function res(y, u, w)
     h, H, v, m = y
     ph, pH, pv, pm = w
     return ∫(
-      (c(h, ph) - v * ph) +
-      (c(v, pv) * m - (u - D(h, v) - g(h) * m) * pv) +
-      (c(m, pm) + pm * u / cc) +
-      c(H, pH)
+      (dt(h, ph) - v * ph) +
+      (dt(v, pv) * m - (u - D(h, v) - g(h) * m) * pv) +
+      (dt(m, pm) + pm * u / cc) +
+      dt(H, pH)
     )dΩ + ∫( (H - h) * pH )dΓ
   end
   op = FEOperator(res, Ypde, Xpde)

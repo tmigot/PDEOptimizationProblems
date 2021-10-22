@@ -17,16 +17,13 @@ function methanol(args...; n = 100, kwargs...)
   degree = 1
   dΩ = Measure(trian, degree)
 
-  # for the weak formulation of dy/dt
-  conv(u, ∇u) = (∇u ⋅ one(∇u)) ⊙ u
-  c(u, v) = conv ∘ (v, ∇(u))
   function res(θ, y, v)
     y1, y2, y3 = y
     v1, v2, v3 = v
     return ∫(
-      (c(y1, v1) + v1 * (2θ[2] - θ[1] * y2 / ((θ[2] + θ[5]) * y1 + y2) + θ[3] + θ[4]) * y1) +
-      (c(y2, v2) - v2 * (θ[1] * y1 * (θ[2] * y1 - y2) / ((θ[2] + θ[5]) * y1 + y2) + θ[3] * y1)) +
-      (c(y3, v3) - v3 * (θ[1] * y1 * (θ[5] * y1 + y2) / ((θ[2] + θ[5]) * y1 + y2) + θ[4] * y1)),
+      (dt(y1, v1) + v1 * (2θ[2] - θ[1] * y2 / ((θ[2] + θ[5]) * y1 + y2) + θ[3] + θ[4]) * y1) +
+      (dt(y2, v2) - v2 * (θ[1] * y1 * (θ[2] * y1 - y2) / ((θ[2] + θ[5]) * y1 + y2) + θ[3] * y1)) +
+      (dt(y3, v3) - v3 * (θ[1] * y1 * (θ[5] * y1 + y2) / ((θ[2] + θ[5]) * y1 + y2) + θ[4] * y1)),
     )dΩ
   end
   op = FEOperator(res, Ypde, Xpde)
