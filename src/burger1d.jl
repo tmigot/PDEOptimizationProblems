@@ -11,9 +11,9 @@ where the constraint is a 1D stationary Burger's equation over Ω, with
 h(x)=2(ν + x^3) and ν=0.08. The first objective measures deviation from the
 data y_d(x)=-x^2, while the second term regularizes the control with α = 0.01.
 
-This example has been used in [Section 9.1](Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
+This example has been used in, Section 9.1, Estrin, R., Friedlander, M. P., Orban, D., & Saunders, M. A. (2020).
 Implementing a smooth exact penalty function for equality-constrained nonlinear optimization.
-SIAM Journal on Scientific Computing, 42(3), A1809-A1835.)
+SIAM Journal on Scientific Computing, 42(3), A1809-A1835.
 
 The specificity of the problem:
 - quadratic objective function;

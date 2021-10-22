@@ -16,7 +16,7 @@ We solve the following problem:
  Δu + λ u = 0,   for    x ∈  Ω
         u = 0,   for    x ∈ ∂Ω
 
-This example has been used in [Exercice 10.2.11 (p. 313)](G. Allaire, Analyse numérique et optimisation, Les éditions de Polytechnique)
+This example has been used in Exercice 10.2.11 (p. 313) of G. Allaire, Analyse numérique et optimisation, Les éditions de Polytechnique
 and more eigenvalue problems can be found in Section 7.3.2
 
 TODO:

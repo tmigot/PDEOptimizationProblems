@@ -1,6 +1,6 @@
 ## Goddard Rocket Control
 
-```@example
+```@example 1
 using Gridap, PDENLPModels, PDEOptimizationProblems
 ```
 
@@ -9,7 +9,7 @@ The problem was drawn from the [COPS3](https://www.mcs.anl.gov/~more/cops/cops3.
 was used in [JuMP's tutorials rocket control](https://jump.dev/JuMP.jl/stable/tutorials/Nonlinear%20programs/rocket_control/).
 
 `PDEOptimizationProblems` contains a list of predefined PDE-constrained optimization problems, e.g. Goddard rocket control problem via the function `rocket`. Note that the models in `PDEOptimizationProblems` are in Lagrangian form, so the implementation considers a Mayer to Lagrange formulation that adds an additional (constant) function `H := h(T)` see [in the code](https://github.com/tmigot/PDEOptimizationProblems/blob/main/src/rocket.jl).
-```@example
+```@example 1
 T = 0.2 # final time
 n = 800 # number of cells
 
@@ -17,7 +17,7 @@ nlp = rocket(n = n, T = T)
 ```
 The return model is a `GridapPDENLPModel` and, in particular, is an instance of an `AbstractNLPModel` that can be solved with any tool from the [JuliaSmoothOptimizers organization](https://juliasmoothoptimizers.github.io/).
 Then, using [NLPModelsIpopt.jl](https://github.com/JuliaSmoothOptimizers/NLPModelsIpopt.jl), we solve the model and get the required information.
-```@example
+```@example 1
 using NLPModelsIpopt
 
 stats = ipopt(nlp, x0 = nlp.meta.x0)
@@ -27,7 +27,7 @@ obj_ipopt, con_ipopt = stats.objective, stats.primal_feas
 
 Finally, we can plot the functions, and the results match JuMP's tutorial and COPS 3 report.
 
-```@example
+```@example 1
 using Plots
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
@@ -44,7 +44,7 @@ Plots.plot(
 
 An alternative is also to intepolate the entire solution over the domain as an `FEFunction` (Gridap's function type) and save the interpolation in a VTK file.
 
-```@example
+```@example 1
 Ypde = nlp.pdemeta.Ypde
 h_h  = FEFunction(Ypde.spaces[1], hh)
 H_h  = FEFunction(Ypde.spaces[2], Hh)
