@@ -50,6 +50,7 @@ obj_feas = obj(nlp, stats.solution[1:nlp.meta.nvar])
 =#
 
 using Plots
+gr()
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
 p = Plots.plot(
@@ -61,4 +62,4 @@ p = Plots.plot(
   legend = false,
   margin = 1Plots.cm,
 )
-Plots.svg(p, "rocket")
+png("rocket")
