@@ -29,7 +29,7 @@ Finally, we can plot the functions, and the results match JuMP's tutorial and CO
 
 ```@setup 1
 using Plots
-pyplot()
+gr()
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
 p = Plots.plot(
@@ -41,15 +41,15 @@ p = Plots.plot(
   legend = false,
   margin = 1Plots.cm,
 )
-Plots.svg(p, "rocket")
+png("rocket")
 ```
 
 ```
 using Plots
-pyplot()
+gr()
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
-p = Plots.plot(
+Plots.plot(
   Plots.plot(0:T/n:T, vcat(h₀, hh); xlabel = "Time (s)", ylabel = "Altitude"),
   Plots.plot(0:T/n:T, vcat(m₀, mh, mᵪ * m₀); xlabel = "Time (s)", ylabel = "Mass"),
   Plots.plot(0:T/n:T, vcat(0., vh); xlabel = "Time (s)", ylabel = "Velocity"),
@@ -58,10 +58,9 @@ p = Plots.plot(
   legend = false,
   margin = 1Plots.cm,
 )
-Plots.svg(p, "rocket")
 ```
 
-![](rocket.svg)
+![](rocket.png)
 
 An alternative is also to intepolate the entire solution over the domain as an `FEFunction` (Gridap's function type) and save the interpolation in a VTK file.
 
