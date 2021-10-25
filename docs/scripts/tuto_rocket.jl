@@ -52,7 +52,7 @@ obj_feas = obj(nlp, stats.solution[1:nlp.meta.nvar])
 using Plots
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
-Plots.plot(
+p = Plots.plot(
   Plots.plot(0:T/n:T, vcat(h₀, hh); xlabel = "Time (s)", ylabel = "Altitude"),
   Plots.plot(0:T/n:T, vcat(m₀, mh, mᵪ * m₀); xlabel = "Time (s)", ylabel = "Mass"),
   Plots.plot(0:T/n:T, vcat(0., vh); xlabel = "Time (s)", ylabel = "Velocity"),
@@ -61,3 +61,4 @@ Plots.plot(
   legend = false,
   margin = 1Plots.cm,
 )
+Plots.svg(p, "rocket")
