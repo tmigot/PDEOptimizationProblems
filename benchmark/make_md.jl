@@ -1,4 +1,5 @@
-using Pkg; Pkg.activate(".")
+using Pkg;
+Pkg.activate(".");
 include("utils.jl")
 
 solvers = [:ipopt, :DCILDL]

@@ -44,7 +44,7 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
       -p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) +
       dt(cf, p) +
       dt(pf, q) +
-      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf)
+      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf),
     )dΩ
   end
 
@@ -52,7 +52,17 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
   op_sir = FEOperator(res, Ypde, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "cellincrease n=$n")
+  return GridapPDENLPModel(
+    xin,
+    f,
+    trian,
+    Ypde,
+    Ycon,
+    Xpde,
+    Xcon,
+    op_sir,
+    name = "cellincrease n=$n",
+  )
 end
 
 cellincrease_meta = Dict(

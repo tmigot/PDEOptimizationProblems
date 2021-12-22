@@ -2,7 +2,12 @@ ENV["GKSwstype"] = "100"
 using PDEOptimizationProblems
 using Documenter
 
-DocMeta.setdocmeta!(PDEOptimizationProblems, :DocTestSetup, :(using PDEOptimizationProblems); recursive = true)
+DocMeta.setdocmeta!(
+  PDEOptimizationProblems,
+  :DocTestSetup,
+  :(using PDEOptimizationProblems);
+  recursive = true,
+)
 
 makedocs(;
   modules = [PDEOptimizationProblems],
@@ -17,7 +22,12 @@ makedocs(;
     canonical = "https://tmigot.github.io/PDEOptimizationProblems",
     assets = ["assets/style.css"],
   ),
-  pages = ["Home" => "index.md", "COPS" => "cops.md", "Rocket Control" => "tuto_rocket.md", "Reference" => "reference.md"],
+  pages = [
+    "Home" => "index.md",
+    "COPS" => "cops.md",
+    "Rocket Control" => "tuto_rocket.md",
+    "Reference" => "reference.md",
+  ],
 )
 
 deploydocs(;

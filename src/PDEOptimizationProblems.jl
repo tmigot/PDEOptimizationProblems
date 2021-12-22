@@ -36,7 +36,7 @@ struct InterpolatedEnergyFETerm{M}
       throw(error("Dimension error size(Ymes) != (nymes, ny) ($(size(Ymes)), $((nymes, ny)))"))
     end
     if typeof(Xmes) <: AbstractVector
-      if length(Xmes) != nymes 
+      if length(Xmes) != nymes
         throw(error("Dimension error length(Xmes) != nymes ($(length(Xmes)), $(nymes)) "))
       end
     elseif size(Xmes) != (ndim, nymes)
@@ -46,17 +46,22 @@ struct InterpolatedEnergyFETerm{M}
     for j = 1:nymes
       δ[j] = t -> exp(-(norm(t - Xmes[j])^2 / h))
     end
-    Sδ = x -> sum(δ[j](x) for j=1:nymes)
+    Sδ = x -> sum(δ[j](x) for j = 1:nymes)
     interpolated_y = Array{Function}(undef, ny)
     for j = 1:ny
       if ndim > 1
-        throw(error("Not implemented interpolation for dimension > 1. Please open an issue with an example."))
+        throw(
+          error(
+            "Not implemented interpolation for dimension > 1. Please open an issue with an example.",
+          ),
+        )
       end
-      interpolated_y[j] = t -> begin
-        i = findfirst(x -> x ≥ t[1], Xmes) #Assuming 1D
-        h = isnothing(i) || i == 1 ? 1 : (Xmes[i] - t[1]) / (Xmes[i - 1] - Xmes[i])
-        return isnothing(i) || i == 1 ? Ymes[1, j] : Ymes[i - 1, j] + h * Ymes[i, j]
-      end
+      interpolated_y[j] =
+        t -> begin
+          i = findfirst(x -> x ≥ t[1], Xmes) #Assuming 1D
+          h = isnothing(i) || i == 1 ? 1 : (Xmes[i] - t[1]) / (Xmes[i - 1] - Xmes[i])
+          return isnothing(i) || i == 1 ? Ymes[1, j] : Ymes[i - 1, j] + h * Ymes[i, j]
+        end
     end
     return new{typeof(dΩ)}(ny, nymes, Ymes, ndim, Xmes, dΩ, δ, Sδ, h, interpolated_y)
   end
@@ -86,9 +91,7 @@ function interpolated_measurement(IT::InterpolatedEnergyFETerm, y)
   if ny > 1
     # Function get_data is not implemented for MultiFieldCellField at this moment.
     # You need to extract the individual fields and then evaluate them separately.
-    return sum(
-      ∫(Sδ ⋅ dot(y[i] - interpolated_y[i], y[i] - interpolated_y[i]))dΩ for i=1:ny
-    )
+    return sum(∫(Sδ ⋅ dot(y[i] - interpolated_y[i], y[i] - interpolated_y[i]))dΩ for i = 1:ny)
   else # ny = 1
     return ∫(Sδ ⋅ dot(y - interpolated_y[1], y - interpolated_y[1]))dΩ
   end
