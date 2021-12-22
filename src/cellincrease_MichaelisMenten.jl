@@ -8,8 +8,8 @@ Using Michaelis-Menten's function for the photosynthetic rate.
 function cellincrease_MichaelisMenten(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
   kp(x) = 1.6
   kr(x) = 2.1
-  K(x) = 140.
-  I(x) = 100.
+  K(x) = 140.0
+  I(x) = 100.0
 
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)
@@ -46,7 +46,7 @@ function cellincrease_MichaelisMenten(args...; x0 = [0.6, 0.1], n = 10, T = 7, k
       -p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) +
       dt(cf, p) +
       dt(pf, q) +
-      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf)
+      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf),
     )dΩ
   end
 
@@ -54,7 +54,17 @@ function cellincrease_MichaelisMenten(args...; x0 = [0.6, 0.1], n = 10, T = 7, k
   op_sir = FEOperator(res, Ypde, Xpde)
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, op_sir, name = "cellincrease_MichaelisMenten n=$n")
+  return GridapPDENLPModel(
+    xin,
+    f,
+    trian,
+    Ypde,
+    Ycon,
+    Xpde,
+    Xcon,
+    op_sir,
+    name = "cellincrease_MichaelisMenten n=$n",
+  )
 end
 
 cellincrease_MichaelisMenten_meta = Dict(
