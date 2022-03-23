@@ -10,7 +10,7 @@ Gridap = "56d4f2e9-7ea1-5844-9cf6-b9c51ca7ce8e"
 PDENLPModels = "80da258d-c172-4540-9646-64f172512520"
 
 [compat]
-ChainRulesCore = "=1.3.0"
+ChainRulesCore = "=1.3.0, 1.14"
 DataFrames = "1"
 Gridap = "0.15.5"
 PDENLPModels = "0.2, 0.3"
