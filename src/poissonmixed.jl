@@ -33,7 +33,6 @@ function poissonmixed(args...; n = 3, kwargs...)
   function res(k, y, v)
     ∫(k[1] * ∇(v) ⊙ ∇(y) - v * f * k[2])dΩ
   end
-  op = FEOperator(res, Ug, V0)
 
   function fk(k, y)
     ∫(
@@ -49,7 +48,7 @@ function poissonmixed(args...; n = 3, kwargs...)
 
   nUg = num_free_dofs(Ug)
   x0 = zeros(nUg + 2)
-  return GridapPDENLPModel(x0, nrj, Ug, V0, op, name = "poissonmixed n=$n")
+  return GridapPDENLPModel(x0, nrj, Ug, V0, res, name = "poissonmixed n=$n")
 end
 
 poissonmixed_meta = Dict(

@@ -33,7 +33,6 @@ function apinene(args...; n = 400, kwargs...)
   trian = Triangulation(model)
   degree = 1
   dΩ = Measure(trian, degree)
-  op_sis = FEOperator(res, Y, X)
 
   zmes = [
     88.35 7.3 2.3 0.4 1.75
@@ -51,7 +50,7 @@ function apinene(args...; n = 400, kwargs...)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs + 5)
-  return GridapPDENLPModel(xin, f, trian, Y, X, op_sis, name = "Isometrization of α-pinene n=$n")
+  return GridapPDENLPModel(xin, f, trian, Y, X, res, name = "Isometrization of α-pinene n=$n")
 end
 
 apinene_meta = Dict(

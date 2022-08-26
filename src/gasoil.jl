@@ -24,7 +24,6 @@ function gasoil(args...; n = 100, kwargs...)
       (dt(y1, v1) + v1 * (θ[1] + θ[3]) * y1 * y1) + (dt(y2, v2) - θ[1] * y1 * y1 - θ[2] * y2),
     )dΩ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   z = [
     1.0000 0
@@ -98,7 +97,7 @@ function gasoil(args...; n = 100, kwargs...)
     trian,
     Ypde,
     Xpde,
-    op,
+    res,
     lvar = lvar,
     uvar = uvar,
     name = "Catalytic Cracking of Gas Oil n=$n",

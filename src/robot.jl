@@ -61,7 +61,6 @@ function robot(args...; n = 400, kwargs...)
       (Iφ(ρ) * (∇(r) ⋅ ∇(φ)) - uφ * p)
     )dΩ # + ∫(p * 0 + q * 0 + r * 0) * dΓ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   ndofs_pde = Gridap.FESpaces.num_free_dofs(Ypde)
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
@@ -84,7 +83,7 @@ function robot(args...; n = 400, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = -ones(ndofs_con),
     uvaru = ones(ndofs_con),
     lvary = lvar,

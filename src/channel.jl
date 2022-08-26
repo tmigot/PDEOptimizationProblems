@@ -39,11 +39,10 @@ function channel(args...; n = 400, kwargs...)
       p4 * R * (y2 * y3 - y1 * y4),
     )dΩ
   end
-  op = FEOperator(res, Y, X)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs)
-  return GridapPDENLPModel(xin, NoFETerm(), Y, X, op, name = "Flow in a Channel n=$n")
+  return GridapPDENLPModel(xin, NoFETerm(), Y, X, res, name = "Flow in a Channel n=$n")
 end
 
 channel_meta = Dict(

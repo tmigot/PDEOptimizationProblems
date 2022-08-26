@@ -70,7 +70,7 @@ function inversepoissonproblem2d(; n::Int = 100)
   function res(y, u, v)
     ∫(-u * (∇(v) ⋅ ∇(y)) - v * h) * dΩ
   end
-  op = FEOperator(res, Y, Xpde)
+
   npde = Gridap.FESpaces.num_free_dofs(Ypde)
   ncon = Gridap.FESpaces.num_free_dofs(Ycon)
 
@@ -82,7 +82,7 @@ function inversepoissonproblem2d(; n::Int = 100)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = zeros(ncon),
     name = "inversePoissonproblem2d n=$n",
   )
