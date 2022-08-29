@@ -33,7 +33,6 @@ function torsion(args...; n = 3, kwargs...)
     v1, v2 = v
     return ∫(v1 * (y + s1 - dxD) + v2 * (y - s2 - dxD)) * dΩ  # |v| ≤ dist(x, ∂D)
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   function f(ys)
     y, s1, s2 = ys
@@ -48,7 +47,7 @@ function torsion(args...; n = 3, kwargs...)
     trian,
     Ypde,
     Xpde,
-    op,
+    res,
     lvar = vcat(
       -Inf * ones(Gridap.FESpaces.num_free_dofs(U)),
       zeros(Gridap.FESpaces.num_free_dofs(U0)),

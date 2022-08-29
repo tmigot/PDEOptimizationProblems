@@ -37,7 +37,6 @@ function steering(args...; n = 400, kwargs...)
     p1, p2 = v
     return ∫(((∇(p1) ⋅ ∇(y1)) - a * (cos ∘ u)) + ((∇(p2) ⋅ ∇(y2)) - a * (sin ∘ u)))dΩ #  + ∫( p1 * 0 + p2 * 0 )*dΓ₀
   end
-  op = FEOperator(res, Ypde, Xpde)
   #=
     There is also a final time constraint
   =#
@@ -62,7 +61,7 @@ function steering(args...; n = 400, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = -pi / 2 * ones(ndofs_con),
     uvaru = pi / 2 * ones(ndofs_con),
     name = "Particle Steering n=$n",

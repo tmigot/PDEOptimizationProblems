@@ -39,8 +39,6 @@ function poisson_with_Neumann_and_Dirichlet(args...; n::Int = 10, kwargs...)
   end
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  op = FEOperator(res, Ypde, Xpde)
-
   return GridapPDENLPModel(
     xin,
     f,
@@ -49,7 +47,7 @@ function poisson_with_Neumann_and_Dirichlet(args...; n::Int = 10, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     name = "poisson with Neumann and Dirichlet n=$n",
   )
 end

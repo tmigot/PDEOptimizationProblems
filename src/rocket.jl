@@ -60,7 +60,6 @@ function rocket(args...; n = 400, T = 1, kwargs...)
       dt(H, pH)
     )dΩ + ∫( (H - h) * pH )dΓ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   function f(y, u)
     h, H, v, m = y
@@ -89,7 +88,7 @@ function rocket(args...; n = 400, T = 1, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = zeros(ndofs_con),
     uvaru = Tmax * ones(ndofs_con),
     lvary = vcat(

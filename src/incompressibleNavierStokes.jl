@@ -60,15 +60,15 @@ function incompressiblenavierstokes(args...; n = 3, kwargs...)
 
   # t_Ω = FETerm(res, Ωₕ, dΩ)
   # op = FEOperator(Y, X, t_Ω)
-  op = FEOperator(res, Y, X)
+  # op = FEOperator(res, Y, X)
   # t_with_jac_Ω = FETerm(res, ja, Ωₕ, dΩ)
-  op_with_jac = FEOperator(res, jac, Y, X)
+  # op_with_jac = FEOperator(res, jac, Y, X)
 
   ndofs = Gridap.FESpaces.num_free_dofs(Y)
   xin = zeros(ndofs)
   # Ycon, Xcon = nothing, nothing
   # @time nlp = GridapPDENLPModel(xin, x->0.0, Ωₕ, dΩ, Y, Ycon, X, Xcon, op)
-  return GridapPDENLPModel(xin, x -> ∫(0.0)dΩ, Ωₕ, Y, X, op, name = "incompressible Navier-Stokes n=$n")
+  return GridapPDENLPModel(xin, x -> ∫(0.0)dΩ, Ωₕ, Y, X, res, name = "incompressible Navier-Stokes n=$n")
 end
 
 incompressiblenavierstokes_meta = Dict(

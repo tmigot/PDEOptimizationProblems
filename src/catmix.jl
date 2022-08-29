@@ -52,7 +52,6 @@ function catmix(args...; n::Int = 100, kwargs...)
       dt(Y2, V2) )dΩ + 
       ∫( (Y1 - y1) * V1 )dΓ  + ∫( (Y2 - y2) * V2 )dΓ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
   # u = 0, y1 = 1, y2 = 0
@@ -71,7 +70,7 @@ function catmix(args...; n::Int = 100, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = zeros(nvar_con),
     uvaru = ones(nvar_con),
     name = "Catalyst Mixing n=$n",

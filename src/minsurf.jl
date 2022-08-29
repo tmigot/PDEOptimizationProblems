@@ -41,7 +41,6 @@ function minsurf(args...; n = 50, kwargs...)
   function res(y, s, v)
     return ∫(v * (s - y + vL)) * dΩ
   end
-  op = FEOperator(res, U, V)
 
   nU = Gridap.FESpaces.num_free_dofs(U)
   nUs = Gridap.FESpaces.num_free_dofs(Us)
@@ -59,7 +58,7 @@ function minsurf(args...; n = 50, kwargs...)
     Us,
     V,
     Vs,
-    op,
+    res,
     lvaru = zeros(nUs),
     uvaru = Inf * ones(nUs),
     name = "Minimal Surface with Obstacle n=$n",

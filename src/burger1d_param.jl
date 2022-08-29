@@ -46,7 +46,6 @@ function burger1d_param(args...; n = 512, kwargs...)
     k1(x) = -k[1]
     ∫(nu * (∇(v) ⊙ ∇(y)) + k1 + c(y, v) - v * u - v * h)dΩ
   end
-  op = FEOperator(res, U, V)
 
   Xcon = TestFESpace(model, reffe; conformity = :H1)
   Ycon = TrialFESpace(Xcon)
@@ -54,7 +53,7 @@ function burger1d_param(args...; n = 512, kwargs...)
 
   Y = MultiFieldFESpace([U, Ycon])
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y) + 1)
-  return GridapPDENLPModel(xin, f, trian, U, Ycon, V, Xcon, op, name = "burger1d_param n=$n")
+  return GridapPDENLPModel(xin, f, trian, U, Ycon, V, Xcon, res, name = "burger1d_param n=$n")
 end
 
 burger1d_param_meta = Dict(

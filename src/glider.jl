@@ -66,7 +66,6 @@ function glider(args...; n = 100, kwargs...)
       (dt(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))) +
       dt(Y, pY) )dΩ  + ∫( (Y - y) * pY )dΓ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   function f(xy, u)
     x, xp, y, Y, yp = xy
@@ -96,7 +95,7 @@ function glider(args...; n = 100, kwargs...)
     Ycon,
     Xpde,
     Xcon,
-    op,
+    res,
     lvaru = zeros(ndofs_con),
     uvaru = cmax * ones(ndofs_con),
     lvary = vcat(

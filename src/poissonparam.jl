@@ -35,15 +35,13 @@ function poissonparam(args...; n = 3, kwargs...)
     k1(x) = k[1]
     ∫(k1 * ∇(v) ⊙ ∇(y) - v * f)dΩ
   end
-  # t_Ω = FETerm(res, trian, dΩ)
-  op = FEOperator(res, Ug, V0)
 
   fk(k) = 0.5 * dot(k .- 1.0, k .- 1.0)
   nrj = NoFETerm(fk) #length(k)=1
 
   nUg = num_free_dofs(Ug)
   xs = rand(nUg + 1)
-  return GridapPDENLPModel(xs, nrj, Ug, V0, op, name = "poissonparam n=$n")
+  return GridapPDENLPModel(xs, nrj, Ug, V0, res, name = "poissonparam n=$n")
 end
 
 poissonparam_meta = Dict(

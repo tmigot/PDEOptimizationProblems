@@ -26,7 +26,6 @@ function methanol(args...; n = 100, kwargs...)
       (dt(y3, v3) - v3 * (θ[1] * y1 * (θ[5] * y1 + y2) / ((θ[2] + θ[5]) * y1 + y2) + θ[4] * y1)),
     )dΩ
   end
-  op = FEOperator(res, Ypde, Xpde)
 
   z = [
     1.0000 0 0
@@ -96,7 +95,7 @@ function methanol(args...; n = 100, kwargs...)
     trian,
     Ypde,
     Xpde,
-    op,
+    res,
     lvar = lvar,
     uvar = uvar,
     name = "Methanol to Hydrocarbons n=$n",
