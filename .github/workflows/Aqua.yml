@@ -17,4 +17,4 @@ jobs:
           version: '1'
       - name: Aqua.jl
         run: |
-          julia --color=yes -e 'using Pkg; Pkg.add("Aqua"); Pkg.develop(path="."); using Aqua, SolverParameters; Aqua.test_all(SolverParameters, ambiguities=false); Aqua.test_ambiguities(SolverParameters)'
+          julia --color=yes -e 'using Pkg; Pkg.add("Aqua"); Pkg.develop(path="."); using Aqua, PDEOptimizationProblems; Aqua.test_all(PDEOptimizationProblems, ambiguities=false); Aqua.test_ambiguities(PDEOptimizationProblems)'
