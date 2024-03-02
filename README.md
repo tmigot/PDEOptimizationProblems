@@ -1,12 +1,11 @@
 # PDEOptimizationProblems
 
-[![DOI]()]()
-[![GitHub release](https://img.shields.io/github/release/tmigot/PDEOptimizationProblems.svg)](https://github.com/tmigot/PDEOptimizationProblems/releases/latest)
-[![](https://img.shields.io/badge/docs-stable-3f51b5.svg)](https://tmigot.github.io/PDEOptimizationProblems/stable)
-[![](https://img.shields.io/badge/docs-dev-3f51b5.svg)](https://tmigot.github.io/PDEOptimizationProblems/dev)
-[![codecov](https://codecov.io/gh/tmigot/PDEOptimizationProblems/branch/main/graph/badge.svg?token=eyiGsilbZx)](https://codecov.io/gh/tmigot/PDEOptimizationProblems)
-![CI](https://github.com/tmigot/PDEOptimizationProblems/workflows/CI/badge.svg?branch=main)
-[![Cirrus CI - Base Branch Build Status](https://img.shields.io/cirrus/github/tmigot/PDEOptimizationProblems?logo=Cirrus%20CI)](https://cirrus-ci.com/github/tmigot/PDEOptimizationProblems)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaSmoothOptimizers.github.io/PDEOptimizationProblems.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaSmoothOptimizers.github.io/PDEOptimizationProblems.jl/dev)
+[![Build Status](https://github.com/JuliaSmoothOptimizers/PDEOptimizationProblems.jl/workflows/CI/badge.svg)](https://github.com/JuliaSmoothOptimizers/PDEOptimizationProblems.jl/actions)
+[![Build Status](https://api.cirrus-ci.com/github/JuliaSmoothOptimizers/PDEOptimizationProblems.jl.svg)](https://cirrus-ci.com/github/JuliaSmoothOptimizers/PDEOptimizationProblems.jl)
+[![Docs workflow Status](https://github.com/JuliaSmoothOptimizers/PDEOptimizationProblems.jl/actions/workflows/Docs.yml/badge.svg?branch=main)](https://github.com/JuliaSmoothOptimizers/PDEOptimizationProblems.jl/actions/workflows/Docs.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/JuliaSmoothOptimizers/PDEOptimizationProblems.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JuliaSmoothOptimizers/PDEOptimizationProblems.jl)
 
 A list of optimization problems with ODE/PDE in the constraints model and discretized using [Gridap.jl](https://github.com/gridap/Gridap.jl) and [PDENLPModels.jl](https://github.com/tmigot/PDENLPModels.jl).
 
