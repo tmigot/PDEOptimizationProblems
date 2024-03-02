@@ -44,7 +44,7 @@ function cellincrease(args...; x0 = [0.6, 0.1], n = 10, T = 7, kwargs...)
       -p * (kp * pf * (1.0 - cf) - kr * cf * (1.0 - cf - pf)) +
       dt(cf, p) +
       dt(pf, q) +
-      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf)
+      q * (kr * cf * (1.0 - cf - pf) * u - kp * pf * pf),
     )dΩ
   end
 

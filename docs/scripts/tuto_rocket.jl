@@ -54,10 +54,10 @@ gr()
 
 h₀, m₀, mᵪ = 1.0, 1.0, 0.6
 p = Plots.plot(
-  Plots.plot(0:T/n:T, vcat(h₀, hh); xlabel = "Time (s)", ylabel = "Altitude"),
-  Plots.plot(0:T/n:T, vcat(m₀, mh, mᵪ * m₀); xlabel = "Time (s)", ylabel = "Mass"),
-  Plots.plot(0:T/n:T, vcat(0., vh); xlabel = "Time (s)", ylabel = "Velocity"),
-  Plots.plot(0:T/(length(uh) - 1):T, uh; xlabel = "Time (s)", ylabel = "Thrust"),
+  Plots.plot(0:(T / n):T, vcat(h₀, hh); xlabel = "Time (s)", ylabel = "Altitude"),
+  Plots.plot(0:(T / n):T, vcat(m₀, mh, mᵪ * m₀); xlabel = "Time (s)", ylabel = "Mass"),
+  Plots.plot(0:(T / n):T, vcat(0.0, vh); xlabel = "Time (s)", ylabel = "Velocity"),
+  Plots.plot(0:(T / (length(uh) - 1)):T, uh; xlabel = "Time (s)", ylabel = "Thrust"),
   layout = (2, 2),
   legend = false,
   margin = 1Plots.cm,

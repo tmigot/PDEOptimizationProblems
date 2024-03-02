@@ -73,4 +73,5 @@ poisson_with_Neumann_and_Dirichlet_meta = Dict(
   :has_fixed_variables => true,
 )
 
-get_poisson_with_Neumann_and_Dirichlet_meta(n::Integer = default_nvar) = (n * (n + 1) + 2 + (n + 1)^2, n * (n + 1) + 2)
+get_poisson_with_Neumann_and_Dirichlet_meta(n::Integer = default_nvar) =
+  (n * (n + 1) + 2 + (n + 1)^2, n * (n + 1) + 2)

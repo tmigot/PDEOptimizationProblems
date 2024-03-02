@@ -47,7 +47,7 @@ function glider(args...; n = 100, kwargs...)
   dΩ = Measure(trian, degree)
 
   degree = 1
-  Γ = BoundaryTriangulation(model, tags=["diri1"])
+  Γ = BoundaryTriangulation(model, tags = ["diri1"])
   dΓ = Measure(Γ, degree)
 
   r(x) = (x / rᵪ - 2.5) * (x / rᵪ - 2.5)
@@ -64,12 +64,13 @@ function glider(args...; n = 100, kwargs...)
       (dt(xp, pxp) - pxp * (-L(x, xp, yp, cL) * w(x, yp) - D(x, xp, yp, cL) * xp)) +
       (dt(y, py) - py * yp) +
       (dt(yp, pyp) + pyp * g - pyp * (L(x, xp, yp, cL) * xp - D(x, xp, yp, cL) * w(x, yp))) +
-      dt(Y, pY) )dΩ  + ∫( (Y - y) * pY )dΓ
+      dt(Y, pY),
+    )dΩ + ∫((Y - y) * pY)dΓ
   end
 
   function f(xy, u)
     x, xp, y, Y, yp = xy
-    return ∫( -Y )dΩ # maximize final horizontal position of a hang glider
+    return ∫(-Y)dΩ # maximize final horizontal position of a hang glider
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)

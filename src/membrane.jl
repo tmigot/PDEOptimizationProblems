@@ -23,12 +23,7 @@ function membrane(args...; n = 3, kwargs...)
 
   valuetype = Float64
   reffe = ReferenceFE(lagrangian, valuetype, 1)
-  V0 = TestFESpace(
-    model,
-    reffe;
-    conformity = :H1,
-    dirichlet_tags = "tag_7",
-  )
+  V0 = TestFESpace(model, reffe; conformity = :H1, dirichlet_tags = "tag_7")
   U0 = TrialFESpace(V0, 0.0)
   nU0 = Gridap.FESpaces.num_free_dofs(U0)
 

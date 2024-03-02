@@ -20,7 +20,7 @@ function catmix(args...; n::Int = 100, kwargs...)
   dΩ = Measure(trian, degree)
 
   degree = 1
-  Γ = BoundaryTriangulation(model, tags=["diri1"])
+  Γ = BoundaryTriangulation(model, tags = ["diri1"])
   dΓ = Measure(Γ, degree)
 
   valuetype = Float64
@@ -46,11 +46,15 @@ function catmix(args...; n::Int = 100, kwargs...)
     y1, Y1, y2, Y2 = y
     v1, V1, v2, V2 = v
     return ∫(
-      dt(y1, v1) - v1 * u * (10 * y2 - y1) + 
-      dt(y2, v2) + v2 * u * (10 * y2 - y1) + v2 * y2 * (1 - u) +
-      dt(Y1, V1) + 
-      dt(Y2, V2) )dΩ + 
-      ∫( (Y1 - y1) * V1 )dΓ  + ∫( (Y2 - y2) * V2 )dΓ
+             dt(y1, v1) - v1 * u * (10 * y2 - y1) +
+             dt(y2, v2) +
+             v2 * u * (10 * y2 - y1) +
+             v2 * y2 * (1 - u) +
+             dt(Y1, V1) +
+             dt(Y2, V2),
+           )dΩ +
+           ∫((Y1 - y1) * V1)dΓ +
+           ∫((Y2 - y2) * V2)dΓ
   end
 
   nvar_con = Gridap.FESpaces.num_free_dofs(Ycon)
