@@ -1,6 +1,6 @@
 using Pkg
 Pkg.activate(".")
-Pkg.add(url="https://github.com/tmigot/PDEOptimizationProblems")
+Pkg.add(url = "https://github.com/tmigot/PDEOptimizationProblems")
 Pkg.instantiate()
 # This package
 using Gridap, PDENLPModels, PDEOptimizationProblems
@@ -80,13 +80,18 @@ solvers = Dict(
       max_cpu_time = max_time,
       x0 = nlp.meta.x0,
     ),
-  :knitro =>nlp -> knitro(nlp, out_hints = 0, outlev = 0,
-    feastol = 1e-5,
-    feastol_abs = 1e-5,
-    opttol = 1e-5,
-    opttol_abs = 1e-5,
-    maxtime_cpu = max_time,
-    x0 = nlp.meta.x0),
+  :knitro =>
+    nlp -> knitro(
+      nlp,
+      out_hints = 0,
+      outlev = 0,
+      feastol = 1e-5,
+      feastol_abs = 1e-5,
+      opttol = 1e-5,
+      opttol_abs = 1e-5,
+      maxtime_cpu = max_time,
+      x0 = nlp.meta.x0,
+    ),
   :DCILDL =>
     nlp -> dci(
       nlp,
@@ -108,4 +113,4 @@ for solver in keys(solvers)
 end
 name = "$(string(today()))_$(list)_pdeoptimizationproblems"
 
-@save string(name,".jld2") stats
+@save string(name, ".jld2") stats

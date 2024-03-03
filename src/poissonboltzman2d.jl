@@ -66,7 +66,17 @@ function poissonboltzman2d(; n::Int = 100)
   end
 
   xin = zeros(Gridap.FESpaces.num_free_dofs(Y))
-  return GridapPDENLPModel(xin, f, trian, Ypde, Ycon, Xpde, Xcon, res, name = "2D-Poisson Boltzman n=$n")
+  return GridapPDENLPModel(
+    xin,
+    f,
+    trian,
+    Ypde,
+    Ycon,
+    Xpde,
+    Xcon,
+    res,
+    name = "2D-Poisson Boltzman n=$n",
+  )
 end
 
 poissonboltzman2d_meta = Dict(

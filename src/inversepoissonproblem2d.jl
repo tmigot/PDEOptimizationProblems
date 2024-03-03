@@ -61,7 +61,7 @@ function inversepoissonproblem2d(; n::Int = 100)
   α = 1e-4
   function f(y, u)
     # ∫(0.5 * (yd - y) * (yd - y) + 0.5 * α * u * u) * dΩ
-    return ∫(0.5 * (zs - u) * (zs - u) ) * dΩ
+    return ∫(0.5 * (zs - u) * (zs - u)) * dΩ
   end
 
   #Definition of the constraint operator

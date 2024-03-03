@@ -4,7 +4,6 @@ export rocket
 # https://www.mcs.anl.gov/~more//cops/cops3.pdf
 # n=400, 800, 1600
 function rocket(args...; n = 400, T = 1, kwargs...)
-
   model = CartesianDiscreteModel((0, T), n)
   labels = get_face_labeling(model)
   add_tag_from_tags!(labels, "diri0", [1]) #initial time condition
@@ -45,7 +44,7 @@ function rocket(args...; n = 400, T = 1, kwargs...)
   dΩ = Measure(trian, degree)
 
   degree = 1
-  Γ = BoundaryTriangulation(model, tags=["diri1"])
+  Γ = BoundaryTriangulation(model, tags = ["diri1"])
   dΓ = Measure(Γ, degree)
 
   D(h, v) = Dᵪ * v * v * (exp ∘ (-hᵪ * (h - h₀) / h₀))
@@ -57,13 +56,13 @@ function rocket(args...; n = 400, T = 1, kwargs...)
       (dt(h, ph) - v * ph) +
       (dt(v, pv) * m - (u - D(h, v) - g(h) * m) * pv) +
       (dt(m, pm) + pm * u / cc) +
-      dt(H, pH)
-    )dΩ + ∫( (H - h) * pH )dΓ
+      dt(H, pH),
+    )dΩ + ∫((H - h) * pH)dΓ
   end
 
   function f(y, u)
     h, H, v, m = y
-    return ∫( -H/T )dΩ
+    return ∫(-H / T)dΩ
   end
 
   ndofs_con = Gridap.FESpaces.num_free_dofs(Ycon)
